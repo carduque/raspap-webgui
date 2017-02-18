@@ -151,6 +151,8 @@ function patch_system_files() {
     sudo_add '/bin/cp /tmp/dhcpddata /etc/dnsmasq.conf'
     sudo_add '/sbin/shutdown -h now'
     sudo_add '/sbin/reboot'
+    sudo_add '/usr/bin/tail -2000 /var/log/*'
+    sudo_add '/usr/bin/tail -25 /var/log/*'
 }
 
 function install_complete() {

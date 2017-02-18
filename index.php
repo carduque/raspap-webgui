@@ -45,6 +45,7 @@ include_once( 'includes/admin.php' );
 include_once( 'includes/dhcp.php' );
 include_once( 'includes/hostapd.php' );
 include_once( 'includes/system.php' );
+include_once( 'includes/system_logs.php' );
 include_once( 'includes/configure_client.php' );
 
 $output = $return = 0;
@@ -150,7 +151,7 @@ $csrf_token = $_SESSION['csrf_token'];
                  <a href="index.php?page=system_info"><i class="fa fa-cube fa-fw"></i> System</a>
               </li>
               <li>
-                 <a href="index.php?page=system_logs"><i class="fa fa-cube fa-fw"></i> Logs</a>
+                 <a href="index.php?page=system_logs"><i class="fa fa-file-text fa-fw"></i> Logs</a>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
