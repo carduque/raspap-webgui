@@ -2,48 +2,61 @@
 
 
 /**
-*
+* Log tab for Raspap
 *
 */
 
+define('RASPAP_CUSTOM_LOG_PATH', '/home/pi/test.log');
+
 //Default mode is tail
 $logMode = "tail";
+$customLogFile = RASPAP_CUSTOM_LOG_PATH;
 
-function readLog($logFile, $logMode) {
-
-  //By default, it's syslog
-  $filepath = "/var/log/syslog";
+function readLog($logFile) {
+  global $logMode, $customLogFile;
+  $filepath = "";
   $addSudo = "sudo";
 
   if ($logFile === "syslog") {
     $filepath = "/var/log/syslog";
   } elseif ($logFile === "daemon") {
     $filepath = "/var/log/daemon.log";
-  } elseif ($logFile === "other") {
-    $filepath = "/home/pi/test.log";
+  } elseif ($logFile === "custom") {
+    $filepath = $customLogFile;
     $addSudo = "";
   }
 
   if ($logMode === "tail") {
     exec("$addSudo tail -25 $filepath", $result);
-    $syslog = $result;
+    $logtext = $result;
   } else {
-    if ($logFile === "other") {
+    if ($logFile === "custom") {
       //cat mode by default
       exec("$addSudo cat $filepath", $result);
-      $syslog = $result;
+      $logtext = $result;
     } else {
       //cat of big system log file crashes
       exec("$addSudo tail -2000 $filepath", $result);
-      $syslog = $result;
+      $logtext = $result;
     }
   }
-  echo implode("\n", $syslog);
+  if (!empty($logtext)) {
+    echo implode("\n", $logtext);
+  } else {
+    echo "File not found or access unauthorized";
+  }
 }
 
 function DisplayLogs(){
-  global $logMode;
+  global $logMode, $customLogFile;
 
+  if( isset($_POST['CustomFilePath']) ) {
+    if (CSRFValidate()) {
+      $customLogFile = $_POST['CustomFilePath'];
+    }
+  } else {
+    error_log('CSRF violation');
+  }
   if( isset($_POST['ShowTail']) ) {
     if (CSRFValidate()) {
       $logMode = "tail";
@@ -68,21 +81,39 @@ function DisplayLogs(){
             <?php CSRFToken() ?>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#syslog" data-toggle="tab">Syslog</a></li>
-              <li><a href="#daemon" data-toggle="tab">Daemon.log</a></li>
-              <li><a href="#other" data-toggle="tab">Other</a></li>
+              <li class="active"><a href="#custom" data-toggle="tab">Custom</a></li>
+              <li><a href="#syslog" data-toggle="tab">Syslog</a></li>
+              <li><a href="#daemon" data-toggle="tab">Daemon</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-              <div class="tab-pane fade in active" id="syslog">
+              <div class="tab-pane in active" id="custom">
+                <h4>Custom logfile</h4>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="filepath">Log path</label>
+                    <input type="text" class="form-control" name="CustomFilePath" value="<?php echo $customLogFile; ?>" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <div class="form-group">
+                      <label for="comment">Contents:</label>
+                      <textarea class="form-control" rows="20" id="comment"><?php readLog("custom") ?></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="syslog">
 
                 <h4>Syslog file</h4>
                 <div class="row">
                   <div class="form-group col-md-12">
                     <div class="form-group">
                       <label for="comment">Contents:</label>
-                      <textarea class="form-control" rows="20" id="comment"><?php readLog("syslog", $logMode) ?></textarea>
+                      <textarea class="form-control" rows="20" id="comment"><?php readLog("syslog") ?></textarea>
                     </div>
                   </div>
                 </div>
@@ -94,19 +125,7 @@ function DisplayLogs(){
                   <div class="form-group col-md-12">
                     <div class="form-group">
                       <label for="comment">Contents:</label>
-                      <textarea class="form-control" rows="20" id="comment"><?php readLog("daemon", $logMode) ?></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="tab-pane fade" id="other">
-                <h4>Custom logfile</h4>
-                <div class="row">
-                  <div class="form-group col-md-12">
-                    <div class="form-group">
-                      <label for="comment">Contents:</label>
-                      <textarea class="form-control" rows="20" id="comment"><?php readLog("other", $logMode) ?></textarea>
+                      <textarea class="form-control" rows="20" id="comment"><?php readLog("daemon") ?></textarea>
                     </div>
                   </div>
                 </div>
