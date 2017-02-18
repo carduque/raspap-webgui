@@ -20,7 +20,7 @@ configured as an access point as follows:
   * Password: secret
 * DHCP range: 192.168.83.10 to 192.168.83.40
 * SSID: `raspi-webgui`
-* Password: ChangeMe
+* Password: `raspberry`
 
 ## License
 See the [LICENSE](./LICENSE) file.
