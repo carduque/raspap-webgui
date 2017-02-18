@@ -117,9 +117,9 @@ function default_configuration() {
     sudo cp $webroot_dir/config/dhcpcd.conf /etc/dhcpcd.conf || install_error "Unable to move dhcpcd configuration file"
     sudo cp $webroot_dir/config/rc.local /etc/rc.local || install_error "Unable to move rc.local file"
     if [ -f /etc/default/hostapd ]; then
-        sudo mv /etc/netork/interfaces /etc/netork/interfaces.old || install_error "Unable to backup original /etc/network/interfaces file"
+        sudo mv /etc/network/interfaces /etc/network/interfaces.old || install_error "Unable to backup original /etc/network/interfaces file"
     fi
-    sudo cp $webroot_dir/config/interfaces /etc/netork/interfaces || install_error "Unable to move interfaces file"
+    sudo cp $webroot_dir/config/interfaces /etc/network/interfaces || install_error "Unable to move interfaces file"
 
     rPi3=`cat /proc/cpuinfo | grep Revision | egrep "a02082|a22082" | wc -l`
     if [ $rPi3 -eq 1 ]; then
