@@ -75,6 +75,7 @@ function DisplayWPAConfig(){
           fwrite($wpa_file, "}".PHP_EOL);
         } else {
           if (strlen($network['passphrase']) >=8 && strlen($network['passphrase']) <= 63) {
+            $wpa_passphrase = "";
             exec( 'wpa_passphrase '.escapeshellarg($ssid). ' ' . escapeshellarg($network['passphrase']),$wpa_passphrase );
             foreach($wpa_passphrase as $line) {
               fwrite($wpa_file, $line.PHP_EOL);
@@ -91,13 +92,8 @@ function DisplayWPAConfig(){
       if ($ok) {
         system( 'sudo cp /tmp/wifidata ' . RASPI_WPA_SUPPLICANT_CONFIG, $returnval );
         if( $returnval == 0 ) {
-          exec('sudo wpa_cli reconfigure', $reconfigure_out, $reconfigure_return );
-          if ($reconfigure_return == 0) {
-            $status->addMessage('Wifi settings updated successfully', 'success');
-            $networks = $tmp_networks;
-          } else {
-            $status->addMessage('Wifi settings updated but cannot restart (cannon execute "wpa_cli reconfigure")', 'danger');
-          }
+          $status->addMessage('Wifi settings updated successfully', 'success');
+          $networks = $tmp_networks;
         } else {
           $status->addMessage('Wifi settings failed to be updated', 'danger');
         }
@@ -117,7 +113,7 @@ wifi[MAC]["enc"] = "Open"
 }
 $1 == "SSID:" {
 $1="";
-wifi[MAC]["SSID"] = $0
+wifi[MAC]["SSID"] = substr($0,2)
 }
 $1 == "freq:" {
 wifi[MAC]["freq"] = $NF
