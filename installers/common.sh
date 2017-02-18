@@ -110,12 +110,16 @@ function move_config_file() {
 function default_configuration() {
     install_log "Setting up hostapd"
     if [ -f /etc/default/hostapd ]; then
-        sudo mv /etc/default/hostapd /tmp/default_hostapd.old || install_error "Unable to remove old /etc/default/hostapd file"
+        sudo cp /etc/default/hostapd /tmp/default_hostapd.old || install_error "Unable to remove old /etc/default/hostapd file"
     fi
-    sudo mv $webroot_dir/config/default_hostapd /etc/default/hostapd || install_error "Unable to move hostapd defaults file"
-    sudo mv $webroot_dir/config/dnsmasq.conf /etc/dnsmasq.conf || install_error "Unable to move dnsmasq configuration file"
-    sudo mv $webroot_dir/config/dhcpcd.conf /etc/dhcpcd.conf || install_error "Unable to move dhcpcd configuration file"
-    sudo mv $webroot_dir/config/rc.local /etc/rc.local || install_error "Unable to move rc.local file"
+    sudo cp $webroot_dir/config/default_hostapd /etc/default/hostapd || install_error "Unable to move hostapd defaults file"
+    sudo cp $webroot_dir/config/dnsmasq.conf /etc/dnsmasq.conf || install_error "Unable to move dnsmasq configuration file"
+    sudo cp $webroot_dir/config/dhcpcd.conf /etc/dhcpcd.conf || install_error "Unable to move dhcpcd configuration file"
+    sudo cp $webroot_dir/config/rc.local /etc/rc.local || install_error "Unable to move rc.local file"
+    if [ -f /etc/default/hostapd ]; then
+        sudo mv /etc/netork/interfaces /etc/netork/interfaces.old || install_error "Unable to backup original /etc/network/interfaces file"
+    fi
+    sudo cp $webroot_dir/config/interfaces /etc/netork/interfaces || install_error "Unable to move interfaces file"
 
     rPi3=`cat /proc/cpuinfo | grep Revision | egrep "a02082|a22082" | wc -l`
     if [ $rPi3 -eq 1 ]; then
@@ -153,6 +157,7 @@ function patch_system_files() {
     sudo_add '/sbin/reboot'
     sudo_add '/usr/bin/tail -2000 /var/log/*'
     sudo_add '/usr/bin/tail -25 /var/log/*'
+    sudo_add '/sbin/iw wlan0 scan'
 }
 
 function install_complete() {

@@ -107,29 +107,58 @@ function DisplayWPAConfig(){
     }
   }
 
-  exec( 'sudo wpa_cli scan' );
-  sleep(3);
-  exec( 'sudo wpa_cli scan_results',$scan_return );
-  for( $shift = 0; $shift < 2; $shift++ ) {
-    array_shift($scan_return);
-  }
-  // display output
-  foreach( $scan_return as $network ) {
-    $arrNetwork = preg_split("/[\t]+/",$network);
-    if (array_key_exists($arrNetwork[4], $networks)) {
-      $networks[$arrNetwork[4]]['visible'] = true;
-      $networks[$arrNetwork[4]]['channel'] = ConvertToChannel($arrNetwork[1]);
-      // TODO What if the security has changed?
-    } else {
-      $networks[$arrNetwork[4]] = array(
-        'configured' => false,
-        'protocol' => ConvertToSecurity($arrNetwork[3]),
-        'channel' => ConvertToChannel($arrNetwork[1]),
-        'passphrase' => '',
-        'visible' => true,
-        'connected' => false
-      );
+  // exec( 'sudo wpa_cli scan' );
+  // sleep(3);
+  // exec( 'sudo wpa_cli scan_results',$scan_return );
+  $scanCommand = <<<'EOD'
+sudo iw wlan0 scan | grep -v 'BSS Load:' | awk '$1 == "BSS" {
+MAC = $2
+wifi[MAC]["enc"] = "Open"
+}
+$1 == "SSID:" {
+$1="";
+wifi[MAC]["SSID"] = $0
+}
+$1 == "freq:" {
+wifi[MAC]["freq"] = $NF
+}
+$1 == "WPA:" {
+wifi[MAC]["enc"] = "WPA"
+}
+$1 == "WPS:" {
+wifi[MAC]["enc"] = "WPA"
+}
+END {
+for (w in wifi) {
+if (wifi[w]["SSID"] != "") {
+printf "%s\t%s\t%s\n",wifi[w]["SSID"],wifi[w]["freq"],wifi[w]["enc"]
+}}}'
+EOD;
+
+  exec($scanCommand, $scan_return);
+  if (!empty($scan_return)) {
+    // display output
+    foreach( $scan_return as $network ) {
+      $arrNetwork = explode("\t",$network);
+      if (array_key_exists($arrNetwork[0], $networks)) {
+        $networks[$arrNetwork[0]]['visible'] = true;
+        $networks[$arrNetwork[0]]['channel'] = ConvertToChannel($arrNetwork[1]);
+        // TODO What if the security has changed?
+      } else {
+        $networks[$arrNetwork[0]] = array(
+          'configured' => false,
+          'protocol' => $arrNetwork[2],
+          'channel' => ConvertToChannel($arrNetwork[1]),
+          'passphrase' => '',
+          'visible' => true,
+          'connected' => false
+        );
+      }
     }
+     
+  } else {
+    echo "Wifi scan unauthorized";
+    $status->addMessage('Wifi scan unauthorized', 'danger');
   }
 
   exec( 'iwconfig wlan0', $iwconfig_return );
