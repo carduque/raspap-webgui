@@ -113,10 +113,17 @@ function default_configuration() {
         sudo mv /etc/default/hostapd /tmp/default_hostapd.old || install_error "Unable to remove old /etc/default/hostapd file"
     fi
     sudo mv $webroot_dir/config/default_hostapd /etc/default/hostapd || install_error "Unable to move hostapd defaults file"
-    sudo mv $webroot_dir/config/hostapd.conf /etc/hostapd/hostapd.conf || install_error "Unable to move hostapd configuration file"
     sudo mv $webroot_dir/config/dnsmasq.conf /etc/dnsmasq.conf || install_error "Unable to move dnsmasq configuration file"
     sudo mv $webroot_dir/config/dhcpcd.conf /etc/dhcpcd.conf || install_error "Unable to move dhcpcd configuration file"
     sudo mv $webroot_dir/config/rc.local /etc/rc.local || install_error "Unable to move rc.local file"
+
+    rPi3=`cat /proc/cpuinfo | grep Revision | egrep "a02082|a22082" | wc -l`
+    if [ $rPi3 -eq 1 ]; then
+        sudo mv $webroot_dir/config/hostapd.rpi3.conf /etc/hostapd/hostapd.conf || install_error "Unable to move hostapd configuration file"
+    else
+        sudo mv $webroot_dir/config/hostapd.rpi2.conf /etc/hostapd/hostapd.conf || install_error "Unable to move hostapd configuration file"
+    fi
+
 }
 
 # Add a single entry to the sudoers file
