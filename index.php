@@ -149,6 +149,9 @@ $csrf_token = $_SESSION['csrf_token'];
               <li>
                  <a href="index.php?page=system_info"><i class="fa fa-cube fa-fw"></i> System</a>
               </li>
+              <li>
+                 <a href="index.php?page=system_logs"><i class="fa fa-cube fa-fw"></i> Logs</a>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.navbar-default -->
@@ -194,6 +197,9 @@ $csrf_token = $_SESSION['csrf_token'];
             break;
           case "system_info":
             DisplaySystem();
+            break;
+          case "system_logs":
+            DisplayLogs();
             break;
           default:
             DisplayDashboard();
