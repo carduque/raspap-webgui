@@ -160,6 +160,12 @@ function patch_system_files() {
     sudo_add '/sbin/iw wlan0 scan'
 }
 
+function disable_on_boot() {
+    sudo update-rc.d hostapd disable
+    sudo update-rc.d dnsmasq disable
+    sudo update-rc.d lighttpd disable
+}
+
 function install_complete() {
     install_log "Installation completed!"
     
@@ -183,5 +189,6 @@ function install_raspap() {
     move_config_file
     default_configuration
     patch_system_files
+    disable_on_boot
     install_complete
 }
