@@ -158,6 +158,10 @@ function patch_system_files() {
     sudo_add '/usr/bin/tail -2000 /var/log/*'
     sudo_add '/usr/bin/tail -25 /var/log/*'
     sudo_add '/sbin/iw wlan0 scan'
+    sudo_add '/var/www/scripts/apmode.py on'
+    sudo_add '/var/www/scripts/apmode.py off'
+    sudo_add '/var/www/html/scripts/apmode.py on'
+    sudo_add '/var/www/html/scripts/apmode.py off'
 }
 
 function disable_on_boot() {

@@ -13,15 +13,10 @@ import traceback
 import os
 
 def turnOff():
-    subprocess.call("sudo ifdown wlan0", shell=True)
-    subprocess.call("sudo service hostapd stop", shell=True)
-    subprocess.call("sudo service dnsmasq stop", shell=True)
-    subprocess.call("sudo service lighttpd stop", shell=True)
     subprocess.call("sudo cp " + os.getcwd() + "/interfaces.client /etc/network/interfaces", shell=True)
     subprocess.call("sudo cat /etc/dhcpcd.conf | grep -v 'denyinterfaces wlan0' > /tmp/dhcpcd.conf", shell=True)
     subprocess.call("sudo mv /tmp/dhcpcd.conf /etc/dhcpcd.conf", shell=True)
     time.sleep(3)
-    subprocess.call("sudo ifup wlan0", shell=True)
     subprocess.call("sudo reboot", shell=True)
     #If issues, relaunch this: "/sbin/wpa_supplicant -s -B -P /run/wpa_supplicant.wlan0.pid -i wlan0 -D nl80211,wext -c /etc/wpa_supplicant/wpa_supplicant.conf"
 

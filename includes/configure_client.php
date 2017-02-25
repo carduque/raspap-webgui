@@ -153,8 +153,10 @@ EOD;
     }
      
   } else {
-    echo "Wifi scan unauthorized";
+    echo "Wifi scan not ready, wait a second";
     $status->addMessage('Wifi scan unauthorized', 'danger');
+    sleep(2);
+    echo '<script>location.reload(true);</script>';
   }
 
   exec( 'iwconfig wlan0', $iwconfig_return );

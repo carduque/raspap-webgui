@@ -65,7 +65,12 @@ function DisplayDashboard(){
     } else {
       echo 'Interface already up';
     }
+  } elseif( isset($_POST['disableAndReboot']) ) {
+    $path = exec('pwd');
+    $command = "sudo " . $path . "/scripts/apmode.py off";
+    exec($command);
   }
+
   ?>
   <div class="row">
       <div class="col-lg-12">
@@ -124,7 +129,10 @@ function DisplayDashboard(){
                 echo '<input type="submit" class="btn btn-warning" value="Stop wlan0" name="ifdown_wlan0" />';
               }
               ?>
+              &nbsp;
               <input type="button" class="btn btn-outline btn-primary" value="Refresh" onclick="document.location.reload(true)" />
+              <hr>
+              <input type="submit" class="btn btn-danger" value="Disable AP mode and Reboot" name="disableAndReboot" />
               </form>
             </div>
               </div>
