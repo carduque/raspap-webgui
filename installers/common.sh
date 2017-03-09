@@ -45,14 +45,14 @@ function config_installation() {
 
 # Runs a system software update to make sure we're using all fresh packages
 function update_system_packages() {
-    # OVERLOAD THIS
-    install_error "No function definition for update_system_packages"
+    install_log "Updating sources"
+    sudo apt-get update || install_error "Unable to update package list"
 }
 
 # Installs additional dependencies using system package manager
 function install_dependencies() {
-    # OVERLOAD THIS
-    install_error "No function definition for install_dependencies"
+    install_log "Installing required packages"
+    sudo apt-get install -y lighttpd php5-cgi git hostapd dnsmasq gawk || install_error "Unable to install dependencies"
 }
 
 # Enables PHP for lighttpd and restarts service for settings to take effect
@@ -81,7 +81,7 @@ function download_latest_files() {
     fi
 
     install_log "Cloning latest files from github"
-    git clone https://github.com/jnanin/raspap-webgui /tmp/raspap-webgui || install_error "Unable to download files from github"
+    git clone https://github.com/carduque/raspap-webgui /tmp/raspap-webgui || install_error "Unable to download files from github"
     sudo mv /tmp/raspap-webgui $webroot_dir || install_error "Unable to move raspap-webgui to web root"
 }
 
