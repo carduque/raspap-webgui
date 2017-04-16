@@ -1,4 +1,4 @@
-raspap_dir="/etc/raspap"
+raspap_dir="/opt/FeerBoxClient/feerbox-admin-web"
 raspap_user="www-data"
 version=`sed 's/\..*//' /etc/debian_version`
 
@@ -35,12 +35,12 @@ function config_installation() {
     #fi
     echo "Install directory: ${raspap_dir}"
 
-    echo -n "Complete installation with these values? [y/N]: "
-    read answer
-    if [[ $answer != "y" ]]; then
-        echo "Installation aborted."
-        exit 0
-    fi
+    #echo -n "Complete installation with these values? [y/N]: "
+    #read answer
+    #if [[ $answer != "y" ]]; then
+    #    echo "Installation aborted."
+    #    exit 0
+    #fi
 }
 
 # Runs a system software update to make sure we're using all fresh packages
@@ -173,13 +173,13 @@ function disable_on_boot() {
 function install_complete() {
     install_log "Installation completed!"
     
-    echo -n "The system needs to be rebooted as a final step. Reboot now? [y/N]: "
-    read answer
-    if [[ $answer != "y" ]]; then
-        echo "Installation aborted."
-        exit 0
-    fi
-    sudo shutdown -r now || install_error "Unable to execute shutdown"
+    #echo -n "The system needs to be rebooted as a final step. Reboot now? [y/N]: "
+    #read answer
+    #if [[ $answer != "y" ]]; then
+    #    echo "Installation aborted."
+    #    exit 0
+    #fi
+    #sudo shutdown -r now || install_error "Unable to execute shutdown"
 }
 
 function install_raspap() {
@@ -194,5 +194,15 @@ function install_raspap() {
     default_configuration
     patch_system_files
     disable_on_boot
+    install_complete
+}
+
+function install_raspap_update() {
+    download_latest_files
+    change_file_ownership
+    move_config_file
+    default_configuration
+    #patch_system_files
+    #disable_on_boot
     install_complete
 }
