@@ -18,7 +18,7 @@
  * @see        http://sirlagz.net/2013/02/08/raspap-webgui/
  */
 
-define('RASPI_CONFIG', '/etc/raspap');
+define('RASPI_CONFIG', '/opt/FeerBoxClient/feerbox-admin-web');
 define('RASPI_ADMIN_DETAILS', RASPI_CONFIG.'/raspap.auth');
 
 // Constants for configuration file paths.
