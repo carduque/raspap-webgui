@@ -77,10 +77,10 @@ function create_raspap_directories() {
 # Fetches latest files from github to webroot
 function download_latest_files() {
     if [ -d "$webroot_dir" ]; then
-    	if [ -d "$webroot_dir.old" ]; then
-    		sudo rm -rf $webroot_dir.old || install_error "Unable to remove super old webroot directory"
+    	if [ -d "$webroot.old" ]; then
+    		sudo rm -rf $webroot.old || install_error "Unable to remove super old webroot directory"
     	fi
-        sudo mv $webroot_dir $webroot_dir.old || install_error "Unable to remove old webroot directory"
+        sudo mv $webroot_dir $webroot.old || install_error "Unable to remove old webroot directory"
     fi
 
     install_log "Cloning latest files from github"
