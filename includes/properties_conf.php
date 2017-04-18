@@ -11,9 +11,14 @@
 function DisplayPropertiesConf(){
   $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
 
-  if( isset($_POST['CustomFilePath']) ) {
+  if( isset($_POST['properties_conf']) ) {
     if (CSRFValidate()) {
-      $customLogFile = $_POST['CustomFilePath'];
+     	foreach(array_keys($_POST) as $post) {
+     		if (preg_match('/update(\d+)/', $post, $post_match)) {
+     			$property = $_POST[$post_match[1]];
+     			error_log($property);
+     		}
+     	}
     }
   } else {
     error_log('CSRF violation');
@@ -23,12 +28,12 @@ function DisplayPropertiesConf(){
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
-        <div class="panel-heading"><i class="fa fa-file-text fa-fw"></i> Configure Properties client</div>
+        <div class="panel-heading"><i class="fa fa-smile-o fa-fw"></i> Configure Properties client</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
           <form role="form" action="?page=properties_conf" method="POST">
             <?php CSRFToken() ?>
-            <input type="hidden" name="client_settings" ?>
+            <input type="hidden" name="properties_conf" ?>
             <table class="table table-responsive table-striped">
               <tr>
                 <th></th>
@@ -42,7 +47,7 @@ function DisplayPropertiesConf(){
                 <td>
                 </td>
                 <td>
-                	<?=$key; ?>
+                	<?=str_replace("_", " ", $key); ?>
                 </td>
                 <td>
                 	<input type="text" class="form-control" name="<?php echo $key ?>" value="<?php echo $value ?>"/>
