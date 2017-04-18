@@ -2,7 +2,7 @@
 
 function parse_properties($txtProperties) {
 	$result = array();
-	$lines = split("\n", $txtProperties);
+	$lines = explode("\n", trim(file_get_contents($txtProperties)));
 	$key = "";
 	$isWaitingOtherLine = false;
 	foreach ($lines as $i => $line) {

@@ -1,5 +1,5 @@
 <?php
-include_once( 'java-properties.php' );
+//include_once( 'java-properties.php' );
 
 /**
 * Properties configuration
@@ -42,14 +42,14 @@ function DisplayPropertiesConf(){
                 <td>
                 </td>
                 <td>
-                $key
+                	<?=$key; ?>
                 </td>
                 <td>
-                $value
+                	<input type="text" class="form-control" name="<?php echo $key ?>" value="<?php echo $value ?>"/>
                 </td>
                 <td>
                   <div class="btn-group btn-block">
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update<?php echo $index ?>" name="update<?php echo $index ?>"<?php echo ($network['protocol'] === 'Open' ? ' disabled' : '')?> />
+                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update<?php echo $key ?>" name="update<?php echo $key ?>" />
                   </div>
                 </td>
               </tr>
@@ -59,7 +59,7 @@ function DisplayPropertiesConf(){
           </form>
         </div><!-- /.panel-primary -->
         <br />
-      <div class="panel-footer"> Properties file for </div>
+      <div class="panel-footer"> Properties file for <?php echo $config['client_reference'] ?></div>
     </div><!-- /.col-lg-12 -->
   </div><!-- /.row -->
 <?php 

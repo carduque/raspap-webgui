@@ -155,7 +155,7 @@ $csrf_token = $_SESSION['csrf_token'];
                  <a href="index.php?page=system_logs"><i class="fa fa-file-text fa-fw"></i> Logs</a>
               </li>
               <li>
-                 <a href="index.php?page=properties_conf"><i class="fa fa-file-text fa-fw"></i> Client Properties Configuration</a>
+                 <a href="index.php?page=properties_conf"><i class="fa fa-smile-o fa-fw"></i> Client Properties Configuration</a>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -168,7 +168,7 @@ $csrf_token = $_SESSION['csrf_token'];
         <div class="row">
           <div class="col-lg-12">
             <h1 class="page-header">
-              <img class="logo" src="img/raspAP-logo.png" width="45" height="45">HappyCustomerBox - $config['client_reference']
+              <img class="logo" src="img/raspAP-logo.png" width="45" height="45">HappyCustomerBox - <?php echo $config['client_reference'] ?>
             </h1>
           </div>
         </div><!-- /.row -->
