@@ -6,7 +6,7 @@
 *
 */
 
-define('RASPAP_CUSTOM_LOG_PATH', '/home/pi/test.log');
+define('RASPAP_CUSTOM_LOG_PATH', '/opt/FeerBoxClient/FeerBoxClient/logs/feerbox-client.log');
 
 //Default mode is tail
 $logMode = "tail";

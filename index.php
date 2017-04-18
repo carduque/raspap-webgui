@@ -47,6 +47,7 @@ include_once( 'includes/hostapd.php' );
 include_once( 'includes/system.php' );
 include_once( 'includes/system_logs.php' );
 include_once( 'includes/configure_client.php' );
+include_once( 'includes/properties_conf.php' );
 
 $output = $return = 0;
 $page = $_GET['page'];
@@ -114,7 +115,7 @@ $csrf_token = $_SESSION['csrf_token'];
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">RaspAP Wifi Portal v1.1</a>
+          <a class="navbar-brand" href="index.php">Feerbox Admin web v1.0</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -153,6 +154,9 @@ $csrf_token = $_SESSION['csrf_token'];
               <li>
                  <a href="index.php?page=system_logs"><i class="fa fa-file-text fa-fw"></i> Logs</a>
               </li>
+              <li>
+                 <a href="index.php?page=properties_conf"><i class="fa fa-file-text fa-fw"></i> Client Properties Configuration</a>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.navbar-default -->
@@ -164,7 +168,7 @@ $csrf_token = $_SESSION['csrf_token'];
         <div class="row">
           <div class="col-lg-12">
             <h1 class="page-header">
-              <img class="logo" src="img/raspAP-logo.png" width="45" height="45">RaspAP
+              <img class="logo" src="img/raspAP-logo.png" width="45" height="45">HappyCustomerBox - $config['client_reference']
             </h1>
           </div>
         </div><!-- /.row -->
@@ -201,6 +205,9 @@ $csrf_token = $_SESSION['csrf_token'];
             break;
           case "system_logs":
             DisplayLogs();
+            break;
+          case "properties_conf":
+            DisplayPropertiesConf();
             break;
           default:
             DisplayDashboard();

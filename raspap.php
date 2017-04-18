@@ -1,8 +1,43 @@
 <?php
 
+function parse_properties($txtProperties) {
+	$result = array();
+	$lines = split("\n", $txtProperties);
+	$key = "";
+	$isWaitingOtherLine = false;
+	foreach ($lines as $i => $line) {
+		if (empty($line) || (!$isWaitingOtherLine && strpos($line, "#") === 0))
+			continue;
+			
+		if (!$isWaitingOtherLine) {
+			$key = substr($line, 0, strpos($line, '='));
+			$value = substr($line, strpos($line, '=')+1, strlen($line));        
+		}
+		else {
+			$value .= $line;    
+		}    
+		/* Check if ends with single '\' */
+		if (strrpos($value, "\\") === strlen($value)-strlen("\\")) {
+			$value = substr($value,0,strlen($value)-1)."\n";
+			$isWaitingOtherLine = true;
+		}
+		else {
+			$isWaitingOtherLine = false;
+		}
+		
+		$result[$key] = $value;    
+		unset($lines[$i]);        
+	}
+	
+	return $result;
+}
+
+$properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
+
 $config = array(
   'admin_user' => 'admin',
-  'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i'
+  'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i',
+  'client_reference' => $properties_file['reference']
 );
 
 if ( $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {
