@@ -6,7 +6,19 @@
 *
 */
 
-
+function writeValue($key, $value)
+{                                                               
+    $filename= '/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties';
+    $ini_array = parse_ini_file($filename);
+    $values =  $ini_array[$key]; 
+    $datareading = fopen($filename, 'r');
+    $content = fread($datareading,filesize($filename));
+    fclose($datareading);
+    $content = str_replace($values, $value, $content);
+    $fileWrite = fopen($filename, 'w');
+    fwrite($fileWrite,$content);
+    fclose($fileWrite);                       
+}
 
 function DisplayPropertiesConf(){
   $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
@@ -14,15 +26,17 @@ function DisplayPropertiesConf(){
   if( isset($_POST['properties_conf']) ) {
     if (CSRFValidate()) {
      	foreach(array_keys($_POST) as $post) {
-     		if (preg_match('/update(\d+)/', $post, $post_match)) {
+     		if (preg_match('/update(\w+)/', $post, $post_match)) {
      			$property = $_POST[$post_match[1]];
-     			error_log($property);
+     			writeValue($post_match[1], $property);
+     			error_log($post_match[1] . "="  . $property);
+     			
      		}
      	}
     }
-  } else {
+	else {
     error_log('CSRF violation');
-  }
+  } 
   
   ?>
   <div class="row">
