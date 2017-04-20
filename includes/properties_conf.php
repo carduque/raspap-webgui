@@ -30,14 +30,13 @@ function DisplayPropertiesConf(){
      			$property = $_POST[$post_match[1]];
      			writeValue($post_match[1], $property);
      			error_log($post_match[1] . "="  . $property);
-     			
      		}
      	}
     }
 	else {
     error_log('CSRF violation');
-  } 
-  
+  	} 
+  }
   ?>
   <div class="row">
     <div class="col-lg-12">

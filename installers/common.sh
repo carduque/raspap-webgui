@@ -165,7 +165,7 @@ function patch_system_files() {
     sudo_add '/var/www/scripts/apmode.py off'
     sudo_add '/var/www/html/scripts/apmode.py on'
     sudo_add '/var/www/html/scripts/apmode.py off'
-    sudo_add '/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties'
+    sudo chown $raspap_user /opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties
 }
 
 function disable_on_boot() {
