@@ -10,19 +10,23 @@ function writeValue($key, $value)
 {                                                               
     $filename= '/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties';
     $ini_array = parse_ini_file($filename);
-    $values =  $ini_array[$key]; 
+    $values =  $ini_array[$key];
+    if($values == ""){
+        $values = "false";
+	}
+	if($values == 1){
+	        $values = "true";
+	}
     $datareading = fopen($filename, 'r');
     $content = fread($datareading,filesize($filename));
     fclose($datareading);
-    $content = str_replace($values, $value, $content);
+    $content = str_replace($key."=".$values, $key."=".$value, $content);
     $fileWrite = fopen($filename, 'w');
     fwrite($fileWrite,$content);
     fclose($fileWrite);                       
 }
 
 function DisplayPropertiesConf(){
-  $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
-
   if( isset($_POST['properties_conf']) ) {
     if (CSRFValidate()) {
      	foreach(array_keys($_POST) as $post) {
@@ -35,8 +39,9 @@ function DisplayPropertiesConf(){
     }
 	else {
     error_log('CSRF violation');
-  	} 
+  	}
   }
+  $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties'); 
   ?>
   <div class="row">
     <div class="col-lg-12">
@@ -60,14 +65,14 @@ function DisplayPropertiesConf(){
                 <td>
                 </td>
                 <td>
-                	<?=str_replace("_", " ", $key); ?>
+                	<?=str_replace("_", " ", trim($key)); ?>
                 </td>
                 <td>
-                	<input type="text" class="form-control" name="<?php echo $key ?>" value="<?php echo $value ?>"/>
+                	<input type="text" class="form-control" name="<?php echo trim($key) ?>" value="<?php echo $value ?>"/>
                 </td>
                 <td>
                   <div class="btn-group btn-block">
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update<?php echo $key ?>" name="update<?php echo $key ?>" />
+                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update<?php echo trim($key) ?>" name="update<?php echo trim($key) ?>" />
                   </div>
                 </td>
               </tr>
