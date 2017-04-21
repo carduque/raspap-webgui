@@ -163,10 +163,12 @@ function patch_system_files() {
     sudo_add '/sbin/iw wlan0 scan'
     sudo_add '/var/www/scripts/apmode.py on'
     sudo_add '/var/www/scripts/deployAndReboot.py'
+    sudo_add '/var/www/scripts/deployAndReboot.py -w'
     sudo_add '/var/www/scripts/apmode.py off'
     sudo_add '/var/www/html/scripts/apmode.py on'
     sudo_add '/var/www/html/scripts/apmode.py off'
     sudo_add '/var/www/html/scripts/deployAndReboot.py'
+    sudo_add '/var/www/html/scripts/deployAndReboot.py -w'
     sudo chown $raspap_user /opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties
 }
 
