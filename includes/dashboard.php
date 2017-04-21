@@ -69,6 +69,10 @@ function DisplayDashboard(){
     $path = exec('pwd');
     $command = "sudo " . $path . "/scripts/apmode.py off";
     exec($command);
+  } elseif( isset($_POST['deployAndReboot']) ) {
+    $path = exec('pwd');
+    $command = "sudo " . $path . "/scripts/deployAndReboot.py";
+    exec($command);
   }
 
   ?>
@@ -133,6 +137,8 @@ function DisplayDashboard(){
               <input type="button" class="btn btn-outline btn-primary" value="Refresh" onclick="document.location.reload(true)" />
               <hr>
               <input type="submit" class="btn btn-danger" value="Disable AP mode and Reboot" name="disableAndReboot" />
+              <br/>
+              <input type="submit" class="btn btn-danger" value="Upgrade software and Reboot" name="deployAndReboot" />
               </form>
             </div>
               </div>
