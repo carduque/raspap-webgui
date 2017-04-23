@@ -138,6 +138,7 @@ function DisplayDashboard(){
               <hr>
               <input type="submit" class="btn btn-danger" value="Disable AP mode and Reboot" name="disableAndReboot" />
               <br/>
+              <br/>
               <input type="submit" class="btn btn-danger" value="Upgrade software and Reboot" name="deployAndReboot" />
               </form>
             </div>
