@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # apmodeOn.py
 #
@@ -13,7 +13,7 @@ import traceback
 import os
 
 def deploy():
-    subprocess.call("sudo ./opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh -w", shell=True)
+    subprocess.call("sudo /opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh -w", shell=True)
     time.sleep(3)
     subprocess.call("sudo reboot", shell=True)
 

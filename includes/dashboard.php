@@ -71,8 +71,8 @@ function DisplayDashboard(){
     exec($command);
   } elseif( isset($_POST['deployAndReboot']) ) {
     $path = exec('pwd');
-    $command = "sudo " . $path . "/scripts/deployAndReboot.py";
-    exec($command);
+    $command = escapeshellcmd($path . "/scripts/deployAndReboot.py");
+    shell_exec($command);
   }
 
   ?>
