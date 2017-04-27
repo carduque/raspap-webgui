@@ -20,7 +20,7 @@ function DisplayCounterPeopleViewer(){
    <script type="text/javascript">
         $(document).ready(function(){
             setInterval(function(){
-                $.get("counterpeople_db.php", function(data){
+                $.get("includes/counterpeople_db.php", function(data){
                     $("#pir").append(data);
                 });
             }, 5000);
