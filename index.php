@@ -48,6 +48,7 @@ include_once( 'includes/system.php' );
 include_once( 'includes/system_logs.php' );
 include_once( 'includes/configure_client.php' );
 include_once( 'includes/properties_conf.php' );
+include_once( 'includes/counter_people.php' );
 
 $output = $return = 0;
 $page = $_GET['page'];
@@ -157,6 +158,9 @@ $csrf_token = $_SESSION['csrf_token'];
               <li>
                  <a href="index.php?page=properties_conf"><i class="fa fa-smile-o fa-fw"></i> Client Properties Configuration</a>
               </li>
+              <li>
+                 <a href="index.php?page=counter_people"><i class="fa fa-users-o fa-fw"></i> Counter People Viewer</a>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.navbar-default -->
@@ -208,6 +212,9 @@ $csrf_token = $_SESSION['csrf_token'];
             break;
           case "properties_conf":
             DisplayPropertiesConf();
+            break;
+          case "counter_people":
+            DisplayCounterPeopleViewer();
             break;
           default:
             DisplayDashboard();
