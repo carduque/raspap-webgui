@@ -7,9 +7,11 @@
 function DisplayCounterPeopleViewer(){
   if( isset($_POST['counter_people']) ) {
     if (CSRFValidate()) {
-     	foreach(array_keys($_POST) as $post) {
-     		error_log($post);
-     	}
+		//error_log($_POST['time']);
+		$filename = "/opt/FeerBoxClient/feerbox-admin-web/pir.txt";
+		$handle = fopen($filename, "w");
+		fwrite($handle, $_POST['time']);
+		fclose($handle);
     }
 	else {
     error_log('CSRF violation');
@@ -23,7 +25,7 @@ function DisplayCounterPeopleViewer(){
                 $.get("includes/counterpeople_db.php", function(data){
                     $("#pir").html(data);
                 });
-            }, 5000);
+            }, 1000);
         });
     </script>
   <div class="row">
@@ -32,7 +34,7 @@ function DisplayCounterPeopleViewer(){
         <div class="panel-heading"><i class="fa fa-smile-o fa-fw"></i> Counter People viewer</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-          CounterPeople PIR: <div id="pir"></div>
+          CounterPeople PIR: <div id="pir" style="font-size:xx-large;">0</div>
           <br/><br/><br/>
           <form role="form" action="?page=counter_people" method="POST">
             <?php CSRFToken() ?>

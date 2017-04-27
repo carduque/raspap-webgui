@@ -12,8 +12,8 @@ $contents = fread($handle, filesize($filename));
 fclose($handle);
 $query='SELECT count(*) FROM counterpeople where type="PIR"';
 if($contents != ""){
-	$time = strtotime($contents);
-	$query='SELECT count(*) as total FROM counterpeople where type="PIR" and time>="'.$time.'"';
+	//$time = strtotime($contents);
+	$query='SELECT count(*) as total FROM counterpeople where type="PIR" and time>="'.$contents.'"';
 }
 
 $db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
