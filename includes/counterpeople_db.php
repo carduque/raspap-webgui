@@ -13,14 +13,14 @@ fclose($handle);
 $query='SELECT count(*) FROM counterpeople where type="PIR"';
 if($contents != ""){
 	$time = strtotime($contents);
-	$query='SELECT count(*) FROM counterpeople where type="PIR" and time>="'.$time.'"';
+	$query='SELECT count(*) as total FROM counterpeople where type="PIR" and time>="'.$time.'"';
 }
 
-$db = new SQLite3('/opt/Feerbox/Feerbox/db/feerbox.db');
+$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 
 $results = $db->query($query);
 while ($row = $results->fetchArray()) {
-    echo $row;
+    echo $row['total'];
 }
  
 ?>

@@ -21,7 +21,7 @@ function DisplayCounterPeopleViewer(){
         $(document).ready(function(){
             setInterval(function(){
                 $.get("includes/counterpeople_db.php", function(data){
-                    $("#pir").append(data);
+                    $("#pir").html(data);
                 });
             }, 5000);
         });
