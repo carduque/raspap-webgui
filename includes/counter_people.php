@@ -27,16 +27,13 @@ function DisplayCounterPeopleViewer(){
         });
     </script>
   <div class="row">
-  	<div class="">
-  		CounterPeople PIR: <div id="pir"></div>
-  	</div>
-  </div>
-  <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
         <div class="panel-heading"><i class="fa fa-smile-o fa-fw"></i> Counter People viewer</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
+          CounterPeople PIR: <div id="pir"></div>
+          <br/><br/><br/>
           <form role="form" action="?page=counter_people" method="POST">
             <?php CSRFToken() ?>
             <input type="hidden" name="counter_people" ?>

@@ -6,7 +6,7 @@
 */
 
 // get contents of a file into a string
-$filename = "/opt/Feerbox/feerbox-admin-web/pir.txt";
+$filename = "/opt/FeerBoxClient/feerbox-admin-web/pir.txt";
 $handle = fopen($filename, "r");
 $contents = fread($handle, filesize($filename));
 fclose($handle);
