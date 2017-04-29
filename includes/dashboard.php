@@ -70,6 +70,7 @@ function DisplayDashboard(){
     $command = "sudo " . $path . "/scripts/apmode.py off";
     exec($command);
   } elseif( isset($_POST['deployAndReboot']) ) {
+  $status->addMessage('Upgrading code and reboot when finish, please wait...', 'success');
     $path = exec('pwd');
     $command = escapeshellcmd("python " . $path . "/scripts/deployAndReboot.py");
     $result = shell_exec($command);
