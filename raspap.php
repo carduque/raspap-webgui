@@ -37,7 +37,8 @@ $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/cla
 $config = array(
   'admin_user' => 'admin',
   'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i',
-  'client_reference' => $properties_file['reference']
+  'client_reference' => $properties_file['reference'],
+  'version'=>'1.1'
 );
 
 if ( $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {

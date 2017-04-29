@@ -73,7 +73,7 @@ $csrf_token = $_SESSION['csrf_token'];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Raspbian WiFi Configuration Portal</title>
+    <title>Raspbian WiFi Configuration Portal - version <?php echo $config['version'] ?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -118,7 +118,7 @@ $csrf_token = $_SESSION['csrf_token'];
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Feerbox Admin web v1.0</a>
+          <a class="navbar-brand" href="index.php">Feerbox Admin web <?php echo $config['version'] ?></a>
         </div>
         <!-- /.navbar-header -->
 

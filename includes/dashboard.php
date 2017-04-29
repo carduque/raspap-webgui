@@ -71,8 +71,9 @@ function DisplayDashboard(){
     exec($command);
   } elseif( isset($_POST['deployAndReboot']) ) {
     $path = exec('pwd');
-    $command = escapeshellcmd($path . "/scripts/deployAndReboot.py");
-    shell_exec($command);
+    $command = escapeshellcmd("python " . $path . "/scripts/deployAndReboot.py");
+    $result = shell_exec($command);
+    error_log($result);
   }
 
   ?>
