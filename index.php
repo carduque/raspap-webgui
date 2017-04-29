@@ -161,7 +161,7 @@ $csrf_token = $_SESSION['csrf_token'];
                  <a href="index.php?page=properties_conf"><i class="fa fa-smile-o fa-fw"></i> Client Properties Configuration</a>
               </li>
               <li>
-                 <a href="index.php?page=counter_people"><i class="fa fa-users-o fa-fw"></i> Counter People Viewer</a>
+                 <a href="index.php?page=counter_people"><i class="fa fa-users fa-fw"></i> Counter People Viewer</a>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
