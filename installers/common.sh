@@ -212,7 +212,7 @@ function install_raspap_update() {
     change_file_ownership
     move_config_file
     default_configuration
-    #patch_system_files
+    patch_system_files
     #disable_on_boot
     install_complete
 }
