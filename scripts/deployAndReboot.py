@@ -13,7 +13,8 @@ import traceback
 import os
 
 def deploy():
-    subprocess.call("sudo /opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh -w", shell=True)
+    process = subprocess.Popen("sudo /opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh -w", shell=True, stdout=subprocess.PIPE)
+    process.wait()
     time.sleep(3)
     subprocess.call("sudo reboot", shell=True)
 
