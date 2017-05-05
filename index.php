@@ -40,7 +40,7 @@ define('RASPI_TORPROXY_ENABLED', false );
 include_once( RASPI_CONFIG.'/raspap.php' );
 include_once( 'includes/functions.php' );
 include_once( 'includes/dashboard.php' );
-include_once( 'includes/authenticate.php' );
+#include_once( 'includes/authenticate.php' );
 include_once( 'includes/admin.php' );
 include_once( 'includes/dhcp.php' );
 include_once( 'includes/hostapd.php' );
@@ -49,6 +49,7 @@ include_once( 'includes/system_logs.php' );
 include_once( 'includes/configure_client.php' );
 include_once( 'includes/properties_conf.php' );
 include_once( 'includes/counter_people.php' );
+include_once( 'includes/database_viewer.php' );
 
 $output = $return = 0;
 $page = $_GET['page'];
@@ -161,6 +162,9 @@ $csrf_token = $_SESSION['csrf_token'];
                  <a href="index.php?page=properties_conf"><i class="fa fa-smile-o fa-fw"></i> Client Properties Configuration</a>
               </li>
               <li>
+                 <a href="index.php?page=database"><i class="fa fa-database fa-fw"></i> DataBase Viewer</a>
+              </li>
+              <li>
                  <a href="index.php?page=counter_people"><i class="fa fa-users fa-fw"></i> Counter People Viewer</a>
               </li>
             </ul>
@@ -217,6 +221,9 @@ $csrf_token = $_SESSION['csrf_token'];
             break;
           case "counter_people":
             DisplayCounterPeopleViewer();
+            break;
+          case "database":
+            DisplayDataBaseViewer();
             break;
           default:
             DisplayDashboard();

@@ -170,6 +170,7 @@ function patch_system_files() {
     sudo_add '/var/www/html/scripts/deployAndReboot.py'
     sudo_add '/var/www/html/scripts/deployAndReboot.py -w'
     sudo_add '/opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh -w'
+    sudo_add '/opt/FeerBoxClient/FeerBoxClient/scripts/deploy.sh'
     sudo chown $raspap_user /opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties
     sudo chmod 744 /var/www/html/scripts/deployAndReboot.py
 }

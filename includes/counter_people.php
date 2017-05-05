@@ -31,7 +31,7 @@ function DisplayCounterPeopleViewer(){
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
-        <div class="panel-heading"><i class="fa fa-smile-o fa-fw"></i> Counter People viewer</div>
+        <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People viewer</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
           CounterPeople PIR: <div id="pir" style="font-size:xx-large;">0</div>

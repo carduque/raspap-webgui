@@ -33,3 +33,8 @@
 	width: 140px;
 	float: left;
 }
+
+#viewtable th, td {
+    padding: 10px;
+    text-align: center;
+}
