@@ -11,10 +11,16 @@ function DisplayDataBaseViewer(){
     	//$_POST['table']
     	$query = "";
   		if($_POST['table']=="answers"){
-    		$query='SELECT id, button, time, reference, upload FROM answers order by id limit 100';
+    		$query='SELECT id, button, time, reference, upload FROM answers order by id desc limit 100';
   		}
-  		if($_POST['table']=="mac"){
-  			$query='SELECT id, button, time, reference, upload FROM answers order by id limit 100';
+  		if($_POST['table']=="macs"){
+  			$query='SELECT id, mac, time, reference, upload FROM macs order by id desc limit 100';
+  		}
+  		if($_POST['table']=="counterPeople"){
+  			$query='SELECT id, type, time, reference, upload FROM CounterPeople order by id desc limit 100';
+  		}
+  		if($_POST['table']=="status"){
+  			$query='SELECT id, internet, time, reference, upload FROM CounterPeople order by id desc limit 100';
   		}
 		$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 		$results = $db->query($query);
@@ -36,10 +42,9 @@ function DisplayDataBaseViewer(){
           <form role="form" action="?page=database" method="POST">
             <?php CSRFToken() ?>
             <input type="hidden" name="database" ?>
-	        <input type="text" name="time" value="<?=date('Y-m-d H:i:s')?>">
 	        <select name="table">
 	        	<option value="answers">Answers</option>
-	        	<option value="mac">MAC</option>
+	        	<option value="macs">MACs</option>
 	        	<option value="counterPeople">Counter People</option>
 	        	<option value="status">Status</option>
 	        </select>
@@ -74,10 +79,28 @@ function addTableHeader($table){
 	if($table=="answers"){
 		echo "<th>id</th><th>button</th><th>time</th><th>reference</th><th>upload</th>";
 	}
+	if($table=="macs"){
+		echo "<th>id</th><th>mac</th><th>time</th><th>reference</th><th>upload</th>";
+	}
+	if($table=="counterPeople"){
+		echo "<th>id</th><th>type</th><th>time</th><th>reference</th><th>upload</th>";
+	}
+	if($table=="status"){
+		echo "<th>id</th><th>internet</th><th>time</th><th>reference</th><th>upload</th>";
+	}
 }
 function addColumns($table, $row){
 	if($table=="answers"){
 		echo "<td>".$row['id']."</td><td>".$row['button']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
+	}
+	if($table=="macs"){
+		echo "<td>".$row['id']."</td><td>".$row['mac']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
+	}
+	if($table=="counterPeople"){
+		echo "<td>".$row['id']."</td><td>".$row['type']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
+	}
+	if($table=="status"){
+		echo "<td>".$row['id']."</td><td>".$row['internet']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
 	}
 }
 ?>
