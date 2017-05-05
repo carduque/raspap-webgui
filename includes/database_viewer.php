@@ -53,13 +53,9 @@ function DisplayDataBaseViewer(){
              		echo "<tr>";
              		addTableHeader($_POST['table']);
              		echo "</tr>";
-             		foreach($row as $results) {
+             		while ($row = $results->fetchArray()) {
 			    		echo "<tr>";
-			    		foreach ($row as $column){
-			    			echo "<td>";
-			    			echo $column;
-	    					echo "</td>";
-			    		}
+			    		addColumns($_POST['table'], $row);
 			    		echo "</tr>";
              		}
              		echo "</table>";
@@ -77,6 +73,11 @@ function DisplayDataBaseViewer(){
 function addTableHeader($table){
 	if($table=="answers"){
 		echo "<th>id</th><th>button</th><th>time</th><th>reference</th><th>upload</th>";
+	}
+}
+function addColumns($table, $row){
+	if($table=="answers"){
+		echo "<td>".$row['id']."</td><td>".$row['button']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
 	}
 }
 ?>
