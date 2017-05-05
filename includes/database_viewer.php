@@ -20,7 +20,7 @@ function DisplayDataBaseViewer(){
   			$query='SELECT id, type, time, reference, upload FROM CounterPeople order by id desc limit 100';
   		}
   		if($_POST['table']=="status"){
-  			$query='SELECT id, internet, time, reference, upload FROM CounterPeople order by id desc limit 100';
+  			$query='SELECT id, internet, time, reference, upload FROM Status order by id desc limit 100';
   		}
 		$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 		$results = $db->query($query);
