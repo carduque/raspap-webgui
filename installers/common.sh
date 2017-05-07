@@ -178,7 +178,7 @@ function patch_system_files() {
 function disable_on_boot() {
     sudo update-rc.d hostapd disable
     sudo update-rc.d dnsmasq disable
-    sudo update-rc.d lighttpd disable
+    #sudo update-rc.d lighttpd disable
 }
 
 function install_complete() {
@@ -214,6 +214,6 @@ function install_raspap_update() {
     move_config_file
     default_configuration
     patch_system_files
-    #disable_on_boot
+    disable_on_boot
     install_complete
 }

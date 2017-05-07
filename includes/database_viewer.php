@@ -43,10 +43,10 @@ function DisplayDataBaseViewer(){
             <?php CSRFToken() ?>
             <input type="hidden" name="database" ?>
 	        <select name="table">
-	        	<option value="answers" <?php if($_POST['table']=="answers"){echo "selected";}?>>Answers</option>
-	        	<option value="macs" <?php if($_POST['table']=="macs"){echo "selected";}?>>MACs</option>
-	        	<option value="counterPeople" <?php if($_POST['table']=="counterPeople"){echo "selected";}?>>Counter People</option>
-	        	<option value="status" <?php if($_POST['table']=="status"){echo "selected";}?>>Status</option>
+	        	<option value="answers" <?php if(isset($_POST) && $_POST['table']=="answers"){echo "selected";}?>>Answers</option>
+	        	<option value="macs" <?php if(isset($_POST) && $_POST['table']=="macs"){echo "selected";}?>>MACs</option>
+	        	<option value="counterPeople" <?php if(isset($_POST) && $_POST['table']=="counterPeople"){echo "selected";}?>>Counter People</option>
+	        	<option value="status" <?php if(isset($_POST) && $_POST['table']=="status"){echo "selected";}?>>Status</option>
 	        </select>
 	         <div class="btn-group btn-block">
                     <input type="submit" class="col-md-6 btn btn-info" value="view" id="view" name="View last inserts" />

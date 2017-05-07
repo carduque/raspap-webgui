@@ -17,12 +17,22 @@ function CSRFToken() {
 *
 */
 function CSRFValidate() {
-  if ( hash_equals($_POST['csrf_token'], $_SESSION['csrf_token']) ) {
-    return true;
-  } else {
-    error_log('CSRF violation');
-    return false;
-  }
+	if(version_compare(PHP_VERSION, '5.6.0', '>=')){
+		  if ( hash_equals($_POST['csrf_token'], $_SESSION['csrf_token']) ) {
+		    return true;
+		  } else {
+		    error_log('CSRF violation');
+		    return false;
+		  }
+	}
+	else{
+		if($_POST['csrf_token'] == $_SESSION['csrf_token']){
+			return true;
+		} else {
+			error_log('CSRF violation');
+			return false;
+		}
+	}
 }
 
 /**
