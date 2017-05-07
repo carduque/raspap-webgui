@@ -122,9 +122,13 @@ function default_configuration() {
     if [ -f /etc/default/hostapd ]; then
         sudo mv /etc/network/interfaces /etc/network/interfaces.old || install_error "Unable to backup original /etc/network/interfaces file"
     fi
-    sudo cp $webroot_dir/config/interfaces /etc/network/interfaces || install_error "Unable to move interfaces file"
-
     rPi3=`cat /proc/cpuinfo | grep Revision | egrep "a02082|a22082" | wc -l`
+    if [ $rPi3 -eq 1 ]; then
+    	sudo cp $webroot_dir/config/interfaces /etc/network/interfaces || install_error "Unable to move interfaces file"
+	else
+		sudo cp $webroot_dir/config/interfaces-raspb /etc/network/interfaces || install_error "Unable to move interfaces file"
+	fi
+
     if [ $rPi3 -eq 1 ]; then
         sudo mv $webroot_dir/config/hostapd.rpi3.conf /etc/hostapd/hostapd.conf || install_error "Unable to move hostapd configuration file"
     else
