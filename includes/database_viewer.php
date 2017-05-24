@@ -64,6 +64,7 @@ function DisplayDataBaseViewer(){
 			    		echo "</tr>";
              		}
              		echo "</table>";
+             		$db->close();
              	}
              	?>
              </div>  

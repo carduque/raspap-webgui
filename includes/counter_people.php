@@ -10,7 +10,7 @@ function DisplayCounterPeopleViewer(){
 		//error_log($_POST['time']);
 		$filename = "/opt/FeerBoxClient/feerbox-admin-web/pir.txt";
 		$handle = fopen($filename, "w");
-		fwrite($handle, $_POST['time']);
+		fwrite($handle, date('Y-m-d H:i:s'));
 		fclose($handle);
     }
 	else {
@@ -39,9 +39,14 @@ function DisplayCounterPeopleViewer(){
           <form role="form" action="?page=counter_people" method="POST">
             <?php CSRFToken() ?>
             <input type="hidden" name="counter_people" ?>
-	        <input type="text" name="time" value="<?=date('Y-m-d H:i:s')?>">
+	        <!-- <input type="text" name="time" value="<?=date('Y-m-d H:i:s')?>">-->
+	        <select name="counter_type">
+	        	<option value="PIR">PIR</option>
+	        	<option value="PIR">DISTANCE_SENSOR</option>
+	        	<option value="PIR">LASER</option>
+	        </select>
 	         <div class="btn-group btn-block">
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="update" />
+                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="Reset to zero" />
              </div>  
            </form>
         </div><!-- /.panel-primary -->
