@@ -36,7 +36,7 @@ function DisplaySystemMaintenance(){
     </div><!-- /.col-md-6 -->
     </div><!-- /.row -->
 
-    <form action="?page=system_info" method="POST">
+    <form action="?page=system_maintenance" method="POST">
       <input type="submit" class="btn btn-warning" name="force_hwdclock"   value="Force update hardware clock" />
     </form>
 
