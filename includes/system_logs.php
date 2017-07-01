@@ -11,9 +11,10 @@ define('RASPAP_CUSTOM_LOG_PATH', '/opt/FeerBoxClient/FeerBoxClient/logs/feerbox-
 //Default mode is tail
 $logMode = "tail";
 $customLogFile = RASPAP_CUSTOM_LOG_PATH;
+$laserLogFile = '/opt/FeerBoxClient/FeerBoxClient/logs/lasercounter.log';
 
 function readLog($logFile) {
-  global $logMode, $customLogFile;
+  global $logMode, $customLogFile, $laserLogFile;
   $filepath = "";
   $addSudo = "sudo";
 
@@ -24,6 +25,9 @@ function readLog($logFile) {
   } elseif ($logFile === "custom") {
     $filepath = $customLogFile;
     $addSudo = "";
+  } elseif ($logFile === "laser") {
+  	$filepath = $laserLogFile;
+  	$addSudo = "";
   }
 
   if ($logMode === "tail") {
@@ -48,7 +52,7 @@ function readLog($logFile) {
 }
 
 function DisplayLogs(){
-  global $logMode, $customLogFile;
+	global $logMode, $customLogFile, $laserLogFile;
 
   if( isset($_POST['CustomFilePath']) ) {
     if (CSRFValidate()) {
@@ -82,6 +86,7 @@ function DisplayLogs(){
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
               <li class="active"><a href="#custom" data-toggle="tab">Custom</a></li>
+              <li><a href="#laser" data-toggle="tab">LaserCounterPeople</a></li>
               <li><a href="#syslog" data-toggle="tab">Syslog</a></li>
               <li><a href="#daemon" data-toggle="tab">Daemon</a></li>
             </ul>
@@ -101,6 +106,23 @@ function DisplayLogs(){
                     <div class="form-group">
                       <label for="comment">Contents:</label>
                       <textarea class="form-control" rows="20" id="comment"><?php readLog("custom") ?></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <div class="tab-pane in active" id="laser">
+                <h4>LaserCounterPeople logfile</h4>
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="filepath">Log path</label>
+                    <input type="text" class="form-control" name="LaserFilePath" value="<?php echo $laserLogFile; ?>" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <div class="form-group">
+                      <label for="comment">Contents:</label>
+                      <textarea class="form-control" rows="20" id="comment"><?php readLog("laser") ?></textarea>
                     </div>
                   </div>
                 </div>
