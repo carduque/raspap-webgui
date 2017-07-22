@@ -27,17 +27,19 @@ error_log($max_time);
 $query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time>="'.date('Y-m-d H:i:s', $min_time).'" and time<="'.date('Y-m-d H:i:s', $max_time).'"';
 $results = $db->query($query);
 $i = 0;
+$reference = "";
 $counterpeople = array();
 while ($row = $results->fetchArray()) {
 	$counterpeople[$i]['id'] = $row['id'];
 	$counterpeople[$i]['time'] = $row['time'];
 	$counterpeople[$i]['reference'] = $row['reference'];
+	$reference = $row['reference'];
 	$counterpeople[$i]['upload'] = $row['upload'];
 	$i++;
 }
 
 header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="export'.$week.'.csv"');
+header('Content-Disposition: attachment; filename="counterpeopleexport'.$week.'-'.$reference.'.csv"');
 header('Pragma: no-cache');
 header('Expires: 0');
 $fp = fopen('php://output', 'w');
