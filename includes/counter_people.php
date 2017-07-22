@@ -13,6 +13,7 @@ function DisplayCounterPeopleViewer(){
 		fwrite($handle, date('Y-m-d H:i:s'));
 		fclose($handle);
 		if( isset($_POST['total']) ) {
+			//error_log('aqui');
 			$filename = "/opt/FeerBoxClient/feerbox-admin-web/pir.txt";
 			$handle = fopen($filename, "w");
 			$fecha = new DateTime();
@@ -55,9 +56,11 @@ function DisplayCounterPeopleViewer(){
 	        	<option value="LASER" <?php if(isset($_POST) && isset($_POST['counter_people']) && $_POST['counter_type']=="LASER"){echo "selected";}?>>LASER</option>
 	        </select>
 	         <div class="btn-group btn-block">
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="Reset to zero" />
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Total" id="total" name="Reset to zero" />
-             </div>  
+                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="update" />
+             </div>
+             <div class="btn-group btn-block">
+                    <input type="submit" class="col-md-6 btn btn-warning" value="Total" id="total" name="total" />
+             </div>
            </form>
         </div><!-- /.panel-primary -->
         <br />

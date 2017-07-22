@@ -5,7 +5,30 @@
 *
 */
 function DisplayCounterPeopleExport(){
-
+	$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
+	//Select min value from db
+	$query='SELECT min(time) as min_time FROM counterpeople where type="PIR"';
+	$results = $db->query($query);
+	while ($row = $results->fetchArray()) {
+		$min_time = $row['min_time'];
+	}
+	
+	//Select max value from db
+	$query='SELECT max(time) as max_time FROM counterpeople where type="PIR"';
+	$results = $db->query($query);
+	while ($row = $results->fetchArray()) {
+		$max_time = $row['max_time'];
+	}
+	
+	//How many weeks?
+	$datefrom = strtotime($min_time, 0);
+	$dateto = strtotime($max_time, 0);
+	$difference = $dateto - $datefrom; // Difference in seconds
+	$weeks = floor($difference / 604800);
+	
+	//create link and on click export to csv
+	
+	
  
   ?>
   <div class="row">
@@ -16,25 +39,32 @@ function DisplayCounterPeopleExport(){
         <div class="panel-body">
           CounterPeople PIR: <div id="pir" style="font-size:xx-large;">0</div>
           <br/><br/><br/>
-          <form role="form" action="?page=counter_people_export" method="POST">
-            <?php CSRFToken() ?>
-            <input type="hidden" name="counter_people_export" ?>
-	        <!-- <input type="text" name="time" value="<?=date('Y-m-d H:i:s')?>">-->
-	        <select name="counter_type">
-	        	<option value="PIR" <?php if(isset($_POST) && isset($_POST['counter_people'])&& $_POST['counter_type']=="PIR"){echo "selected";}?>>PIR</option>
-	        	<option value="DISTANCE_SENSOR" <?php if(isset($_POST) && isset($_POST['counter_people']) && $_POST['counter_type']=="DISTANCE_SENSOR"){echo "selected";}?>>DISTANCE_SENSOR</option>
-	        	<option value="LASER" <?php if(isset($_POST) && isset($_POST['counter_people']) && $_POST['counter_type']=="LASER"){echo "selected";}?>>LASER</option>
-	        </select>
-	         <div class="btn-group btn-block">
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="Reset to zero" />
-             </div>  
-           </form>
+          <?php
+          for($i=0;$i<$weeks;$i++){
+          		echo "<a href='#'>Export week ".$i+"</a><br/>";
+          }
+          ?>
         </div><!-- /.panel-primary -->
         <br />
       <div class="panel-footer"></div>
     </div><!-- /.col-lg-12 -->
   </div><!-- /.row -->
 <?php 
+}
+
+function getOneWeek(){
+	//select from min to min + 1 week
+	$max_time = strtotime("+7 day", $min_time);
+	$query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time<='.$min_date.' and time>='.$max_date;
+	$results = $db->query($query);
+	$i = 0;
+	while ($row = $results->fetchArray()) {
+		$counterpeople[$i]['id'] = $row['id'];
+		$counterpeople[$i]['time'] = $row['time'];
+		$counterpeople[$i]['reference'] = $row['reference'];
+		$counterpeople[$i]['upload'] = $row['upload'];
+		$i++;
+	}
 }
 
 ?>
