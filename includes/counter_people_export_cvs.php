@@ -23,7 +23,7 @@ $min_time = strtotime("+".$total_days." day", $min_time);
 $max_time = strtotime("+7 day", $min_time);
 error_log($min_time);
 error_log($max_time);
-$query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time<='.$min_date.' and time>='.$max_date;
+$query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time<="'.$min_date.'" and time>="'.$max_date.'"';
 $results = $db->query($query);
 $i = 0;
 while ($row = $results->fetchArray()) {
