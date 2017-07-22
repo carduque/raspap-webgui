@@ -27,6 +27,7 @@ error_log($max_time);
 $query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time>="'.date('Y-m-d H:i:s', $min_time).'" and time<="'.date('Y-m-d H:i:s', $max_time).'"';
 $results = $db->query($query);
 $i = 0;
+$counterpeople = array();
 while ($row = $results->fetchArray()) {
 	$counterpeople[$i]['id'] = $row['id'];
 	$counterpeople[$i]['time'] = $row['time'];
