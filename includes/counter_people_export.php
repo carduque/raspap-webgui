@@ -37,11 +37,10 @@ function DisplayCounterPeopleExport(){
         <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People export</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-          CounterPeople PIR: <div id="pir" style="font-size:xx-large;">0</div>
           <br/><br/><br/>
           <?php
           for($i=0;$i<$weeks;$i++){
-          		echo "<a href='#'>Export week ".$i+"</a><br/>";
+          		echo "<a href='#'>Export week ".$i."</a><br/>";
           }
           ?>
         </div><!-- /.panel-primary -->
