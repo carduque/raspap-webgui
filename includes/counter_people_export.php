@@ -31,6 +31,7 @@ function DisplayCounterPeopleExport(){
 	
  
   ?>
+  
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
@@ -40,7 +41,7 @@ function DisplayCounterPeopleExport(){
           <br/><br/><br/>
           <?php
           for($i=0;$i<$weeks;$i++){
-          		echo "<a href='#'>Export week ".$i."</a><br/>";
+          		echo "<a href='includes/counter_people_export_cvs.php?week=".$i."'>Export week ".$i."</a><br/>";
           }
           ?>
         </div><!-- /.panel-primary -->
@@ -49,21 +50,6 @@ function DisplayCounterPeopleExport(){
     </div><!-- /.col-lg-12 -->
   </div><!-- /.row -->
 <?php 
-}
-
-function getOneWeek(){
-	//select from min to min + 1 week
-	$max_time = strtotime("+7 day", $min_time);
-	$query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time<='.$min_date.' and time>='.$max_date;
-	$results = $db->query($query);
-	$i = 0;
-	while ($row = $results->fetchArray()) {
-		$counterpeople[$i]['id'] = $row['id'];
-		$counterpeople[$i]['time'] = $row['time'];
-		$counterpeople[$i]['reference'] = $row['reference'];
-		$counterpeople[$i]['upload'] = $row['upload'];
-		$i++;
-	}
 }
 
 ?>
