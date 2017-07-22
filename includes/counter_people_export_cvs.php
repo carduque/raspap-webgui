@@ -18,8 +18,10 @@ while ($row = $results->fetchArray()) {
 	$min_time = $row['min_time'];
 }
 $int_week = (int) $week;
-error_log($int_week);
+error_log($min_time);
 $total_days = $int_week * 7;
+$days_txt = "+".$total_days." day";
+error_log($days_txt);
 $min_time = strtotime("+".$total_days." day", $min_time);
 $max_time = strtotime("+7 day", $min_time);
 error_log($min_time);
