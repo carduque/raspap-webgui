@@ -22,7 +22,7 @@ function DisplayCounterPeopleViewer(){
    <script type="text/javascript">
         $(document).ready(function(){
             setInterval(function(){
-                $.get("includes/counterpeople_db.php<?php if(isset($_POST)){echo "?type=".$_POST['counter_type'];}?>", function(data){
+                $.get("includes/counterpeople_db.php<?php if(isset($_POST) && isset($_POST['counter_people'])){echo "?type=".$_POST['counter_type'];}?>", function(data){
                     $("#pir").html(data);
                 });
             }, 1000);
@@ -41,9 +41,9 @@ function DisplayCounterPeopleViewer(){
             <input type="hidden" name="counter_people" ?>
 	        <!-- <input type="text" name="time" value="<?=date('Y-m-d H:i:s')?>">-->
 	        <select name="counter_type">
-	        	<option value="PIR" <?php if(isset($_POST) && $_POST['counter_type']=="PIR"){echo "selected";}?>>PIR</option>
-	        	<option value="DISTANCE_SENSOR" <?php if(isset($_POST) && $_POST['counter_type']=="DISTANCE_SENSOR"){echo "selected";}?>>DISTANCE_SENSOR</option>
-	        	<option value="LASER" <?php if(isset($_POST) && $_POST['counter_type']=="LASER"){echo "selected";}?>>LASER</option>
+	        	<option value="PIR" <?php if(isset($_POST) && isset($_POST['counter_people'])&& $_POST['counter_type']=="PIR"){echo "selected";}?>>PIR</option>
+	        	<option value="DISTANCE_SENSOR" <?php if(isset($_POST) && isset($_POST['counter_people']) && $_POST['counter_type']=="DISTANCE_SENSOR"){echo "selected";}?>>DISTANCE_SENSOR</option>
+	        	<option value="LASER" <?php if(isset($_POST) && isset($_POST['counter_people']) && $_POST['counter_type']=="LASER"){echo "selected";}?>>LASER</option>
 	        </select>
 	         <div class="btn-group btn-block">
                     <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="Reset to zero" />

@@ -12,6 +12,7 @@ define('RASPAP_CUSTOM_LOG_PATH', '/opt/FeerBoxClient/FeerBoxClient/logs/feerbox-
 $logMode = "tail";
 $customLogFile = RASPAP_CUSTOM_LOG_PATH;
 $laserLogFile = '/opt/FeerBoxClient/FeerBoxClient/logs/lasercounter.log';
+$adminLogFile = '/var/log/lighttpd/error.log';
 
 function readLog($logFile) {
   global $logMode, $customLogFile, $laserLogFile;
