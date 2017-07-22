@@ -49,6 +49,7 @@ include_once( 'includes/system_logs.php' );
 include_once( 'includes/configure_client.php' );
 include_once( 'includes/properties_conf.php' );
 include_once( 'includes/counter_people.php' );
+include_once( 'includes/counter_people_export.php' );
 include_once( 'includes/database_viewer.php' );
 include_once( 'includes/system_maintenance.php' );
 
@@ -169,6 +170,9 @@ $csrf_token = $_SESSION['csrf_token'];
                  <a href="index.php?page=counter_people"><i class="fa fa-users fa-fw"></i> Counter People Viewer</a>
               </li>
               <li>
+                 <a href="index.php?page=counter_people_export"><i class="fa fa-users fa-fw"></i> Counter People Export</a>
+              </li>
+              <li>
                  <a href="index.php?page=system_maintenance"><i class="fa fa-users fa-fw"></i> System Maintenance</a>
               </li>
             </ul>
@@ -226,6 +230,9 @@ $csrf_token = $_SESSION['csrf_token'];
           case "counter_people":
             DisplayCounterPeopleViewer();
             break;
+          case "counter_people_export":
+          	DisplayCounterPeopleExport();
+          	break;
           case "database":
             DisplayDataBaseViewer();
             break;

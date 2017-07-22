@@ -12,15 +12,6 @@ function DisplayCounterPeopleViewer(){
 		$handle = fopen($filename, "w");
 		fwrite($handle, date('Y-m-d H:i:s'));
 		fclose($handle);
-		if( isset($_POST['total']) ) {
-			$filename = "/opt/FeerBoxClient/feerbox-admin-web/pir.txt";
-			$handle = fopen($filename, "w");
-			$fecha = new DateTime();
-			$fecha->setDate(2001, 1, 1);
-			$fecha->setTime(0, 0);
-			fwrite($handle, date_format($fecha,'Y-m-d H:i:s'));
-			fclose($handle);
-		}
     }
 	else {
     error_log('CSRF violation');
@@ -56,7 +47,6 @@ function DisplayCounterPeopleViewer(){
 	        </select>
 	         <div class="btn-group btn-block">
                     <input type="submit" class="col-md-6 btn btn-warning" value="Update" id="update" name="Reset to zero" />
-                    <input type="submit" class="col-md-6 btn btn-warning" value="Total" id="total" name="Reset to zero" />
              </div>  
            </form>
         </div><!-- /.panel-primary -->
