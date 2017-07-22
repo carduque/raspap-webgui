@@ -39,9 +39,9 @@ header('Content-Disposition: attachment; filename="export'.$week.'.csv"');
 header('Pragma: no-cache');
 header('Expires: 0');
 $fp = fopen('php://output', 'w');
-foreach ($counterpeople as $counter)
+for ($i=0;$i<count($counterpeople);$i++)
 {
-	fputcsv($fp, array_values($counter));
+	fputcsv($fp, array_values($counterpeople[$i]));
 }
 
 die;
