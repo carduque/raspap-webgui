@@ -21,7 +21,7 @@ $int_week = (int) $week;
 error_log($min_time);
 $total_days = $int_week * 7;
 $min_time = strtotime("+".$total_days." days", strtotime($min_time));
-$max_time = strtotime("+7 days", strtotime($min_time));
+$max_time = strtotime("+7 days", $min_time);
 error_log($min_time);
 error_log($max_time);
 $query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time<="'.$min_time.'" and time>="'.$max_time.'"';
