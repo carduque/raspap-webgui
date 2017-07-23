@@ -24,7 +24,7 @@ function DisplayCounterPeopleExport(){
 	$datefrom = strtotime($min_time, 0);
 	$dateto = strtotime($max_time, 0);
 	$difference = $dateto - $datefrom; // Difference in seconds
-	$weeks = floor($difference / 604800);
+	$weeks = ceil($difference / 604800);
 	
 	//create link and on click export to csv
 	
