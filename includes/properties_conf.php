@@ -11,16 +11,12 @@ function writeValue($key, $value)
     $filename= '/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties';
     $ini_array = parse_ini_file($filename);
     $values =  $ini_array[$key];
-    if($values == ""){
-        $values = "false";
-	}
-	if($values == 1){
-	        $values = "true";
-	}
+    
     $datareading = fopen($filename, 'r');
     $content = fread($datareading,filesize($filename));
     fclose($datareading);
     $content = str_replace($key."=".$values, $key."=".$value, $content);
+    $content = str_replace($key." = ".$values, $key."=".$value, $content);
     $fileWrite = fopen($filename, 'w');
     fwrite($fileWrite,$content);
     fclose($fileWrite);                       

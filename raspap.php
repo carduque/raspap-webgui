@@ -38,7 +38,7 @@ $config = array(
   'admin_user' => 'admin',
   'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i',
   'client_reference' => $properties_file['reference'],
-  'version'=>'1.2.3'
+  'version'=>'1.2.4'
 );
 
 if ( file_exists( RASPI_CONFIG.'/raspap.auth') && $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {
