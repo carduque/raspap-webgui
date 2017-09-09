@@ -12,7 +12,9 @@ if (isset($_GET['week'])) {
 }
 $db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 
-$query='SELECT min(time) as min_time FROM counterpeople where type="PIR"';
+$month_ini = new DateTime("first day of last month");
+$month_ini ->setTime(0,0,0);
+$query='SELECT min(time) as min_time FROM counterpeople where type="PIR" and time>="'.date_format($month_ini,'Y-m-d H:i:s').'"';
 $results = $db->query($query);
 while ($row = $results->fetchArray()) {
 	$min_time = $row['min_time'];
