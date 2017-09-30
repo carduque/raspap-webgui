@@ -23,6 +23,12 @@ function DisplaySystemMaintenance(){
     	$result = shell_exec($command);
     	error_log($result);
     }
+    if (isset($_POST['enable_vnc_access'])) {
+    	//$path = exec('pwd');
+    	$command = escapeshellcmd("/opt/FeerBoxClient/FeerBoxClient/scripts/enablig-vnc.sh");
+    	$result = shell_exec($command);
+    	error_log($result);
+    }
     ?>
 
     <div class="row">
@@ -37,7 +43,8 @@ function DisplaySystemMaintenance(){
     </div><!-- /.row -->
 
     <form action="?page=system_maintenance" method="POST">
-      <input type="submit" class="btn btn-warning" name="force_hwdclock"   value="Force update hardware clock" />
+      <input type="submit" class="btn btn-warning" name="force_hwdclock"   value="Force update hardware clock" /><br/>
+      <input type="submit" class="btn btn-warning" name="enable_vnc_access"   value="Enable VNC access" /><br/>
     </form>
 
   </div><!-- /.panel-body -->
