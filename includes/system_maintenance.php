@@ -24,8 +24,8 @@ function DisplaySystemMaintenance(){
     	error_log($result);
     }
     if (isset($_POST['enable_vnc_access'])) {
-    	//$path = exec('pwd');
-    	$command = escapeshellcmd("/opt/FeerBoxClient/FeerBoxClient/scripts/enablig-vnc.sh");
+    	$path = exec('pwd');
+    	$command = escapeshellcmd("python " . $path . "/scripts/executeScript.py enabling-vnc.sh");
     	$result = shell_exec($command);
     	error_log($result);
     }
