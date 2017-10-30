@@ -14,7 +14,7 @@ $db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 
 $month_ini = new DateTime("first day of last month");
 $month_ini ->setTime(0,0,0);
-$query='SELECT min(time) as min_time FROM counterpeople where type="PIR" and time>="'.date_format($month_ini,'Y-m-d H:i:s').'"';
+$query='SELECT min(time) as min_time FROM counterpeople where time>="'.date_format($month_ini,'Y-m-d H:i:s').'"';
 $results = $db->query($query);
 while ($row = $results->fetchArray()) {
 	$min_time = $row['min_time'];
@@ -26,7 +26,7 @@ $min_time = strtotime("+".$total_days." days", strtotime($min_time));
 $max_time = strtotime("+7 days", $min_time);
 error_log($min_time);
 error_log($max_time);
-$query='SELECT id, time, reference, upload FROM counterpeople where type="PIR" and time>="'.date('Y-m-d H:i:s', $min_time).'" and time<="'.date('Y-m-d H:i:s', $max_time).'"';
+$query='SELECT id, time, reference, upload FROM counterpeople where time>="'.date('Y-m-d H:i:s', $min_time).'" and time<="'.date('Y-m-d H:i:s', $max_time).'"';
 $results = $db->query($query);
 $i = 0;
 $reference = "";

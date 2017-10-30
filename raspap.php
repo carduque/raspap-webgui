@@ -33,12 +33,18 @@ function parse_properties($txtProperties) {
 }
 
 $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
+$fh = fopen('/opt/FeerBoxClient/FeerBoxClient/config/version.txt','r');
+while ($line = fgets($fh)) {
+	$feerbox_version = $line;
+}
+fclose($fh);
 
 $config = array(
   'admin_user' => 'admin',
   'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i',
   'client_reference' => $properties_file['reference'],
-  'version'=>'1.2.4.2'
+  'version'=>'1.2.5',
+  'feerbox_version'=>$feerbox_version
 );
 
 if ( file_exists( RASPI_CONFIG.'/raspap.auth') && $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {

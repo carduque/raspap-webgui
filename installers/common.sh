@@ -52,7 +52,7 @@ function update_system_packages() {
 # Installs additional dependencies using system package manager
 function install_dependencies() {
     install_log "Installing required packages"
-    sudo apt-get install -y lighttpd php5-cgi git hostapd dnsmasq gawk || install_error "Unable to install dependencies"
+    sudo apt-get install -y lighttpd php5-cgi php5-sqlite git hostapd dnsmasq gawk || install_error "Unable to install dependencies"
 }
 
 # Enables PHP for lighttpd and restarts service for settings to take effect

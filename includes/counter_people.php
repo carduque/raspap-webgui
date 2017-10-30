@@ -44,7 +44,7 @@ function DisplayCounterPeopleViewer(){
         <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People viewer</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-          CounterPeople PIR: <div id="pir" style="font-size:xx-large;">0</div>
+          CounterPeople: <div id="pir" style="font-size:xx-large;">0</div>
           <br/><br/><br/>
           <form role="form" action="?page=counter_people" method="POST">
             <?php CSRFToken() ?>
