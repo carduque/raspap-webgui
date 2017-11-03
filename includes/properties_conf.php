@@ -16,6 +16,8 @@ function writeValue($key, $value)
     $content = fread($datareading,filesize($filename));
     fclose($datareading);
     $content = str_replace($key."=".$values, $key."=".$value, $content);
+    $content = str_replace($key."= ".$values, $key."=".$value, $content);
+    $content = str_replace($key." =".$values, $key."=".$value, $content);
     $content = str_replace($key." = ".$values, $key."=".$value, $content);
     $fileWrite = fopen($filename, 'w');
     fwrite($fileWrite,$content);
