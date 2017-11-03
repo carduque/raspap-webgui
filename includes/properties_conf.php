@@ -9,7 +9,7 @@
 function writeValue($key, $value)
 {                                                               
     $filename= '/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties';
-    $ini_array = parse_ini_file($filename);
+    $ini_array = parse_ini_file($filename, false, INI_SCANNER_RAW);
     $values =  $ini_array[$key];
     
     $datareading = fopen($filename, 'r');
