@@ -42,7 +42,7 @@ $config = array(
   'admin_user' => 'admin',
   'admin_pass' => '$2y$10$YKIyWAmnQLtiJAy6QgHQ.eCpY4m.HCEbiHaTgN6.acNC6bDElzt.i',
   'client_reference' => $properties_file['reference'],
-  'version'=>'1.2.5',
+  'version'=>'2.0',
   'feerbox_version'=>$feerbox_version
 );
 
