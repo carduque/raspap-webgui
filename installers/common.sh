@@ -277,14 +277,6 @@ function patch_system_files() {
 
 function install_complete() {
     install_log "Installation completed!"
-
-    echo -n "The system needs to be rebooted as a final step. Reboot now? [y/N]: "
-    read answer
-    if [[ $answer != "y" ]]; then
-        echo "Installation aborted."
-        exit 0
-    fi
-    sudo shutdown -r now || install_error "Unable to execute shutdown"
 }
 
 function disable_on_boot() {

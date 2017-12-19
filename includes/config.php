@@ -1,6 +1,6 @@
 <?php
 
-define('RASPI_CONFIG', '/opt/FeerBoxClient/feerbox-admin-web')
+define('RASPI_CONFIG', '/opt/FeerBoxClient/feerbox-admin-web');
 define('RASPI_CONFIG_NETWORKING',RASPI_CONFIG.'/networking');
 define('RASPI_ADMIN_DETAILS', RASPI_CONFIG.'/raspap.auth');
 
