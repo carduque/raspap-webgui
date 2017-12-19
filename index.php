@@ -13,30 +13,12 @@
  * @author     Lawrence Yau <sirlagz@gmail.comm>
  * @author     Bill Zimmerman <billzimmerman@gmail.com>
  * @license    GNU General Public License, version 3 (GPL-3.0)
- * @version    1.1
+ * @version    1.3.0
  * @link       https://github.com/billz/raspap-webgui
  * @see        http://sirlagz.net/2013/02/08/raspap-webgui/
  */
 
-define('RASPI_CONFIG', '/opt/FeerBoxClient/feerbox-admin-web');
-define('RASPI_ADMIN_DETAILS', RASPI_CONFIG.'/raspap.auth');
-
-// Constants for configuration file paths.
-// These are typical for default RPi installs. Modify if needed.
-define('RASPI_DNSMASQ_CONFIG', '/etc/dnsmasq.conf');
-define('RASPI_DNSMASQ_LEASES', '/var/lib/misc/dnsmasq.leases');
-define('RASPI_HOSTAPD_CONFIG', '/etc/hostapd/hostapd.conf');
-define('RASPI_WPA_SUPPLICANT_CONFIG', '/etc/wpa_supplicant/wpa_supplicant.conf');
-define('RASPI_HOSTAPD_CTRL_INTERFACE', '/var/run/hostapd');
-define('RASPI_WPA_CTRL_INTERFACE', '/var/run/wpa_supplicant');
-define('RASPI_OPENVPN_CLIENT_CONFIG', '/etc/openvpn/client.conf');
-define('RASPI_OPENVPN_SERVER_CONFIG', '/etc/openvpn/server.conf');
-define('RASPI_TORPROXY_CONFIG', '/etc/tor/torrc');
-
-// Optional services, set to true to enable.
-define('RASPI_OPENVPN_ENABLED', false );
-define('RASPI_TORPROXY_ENABLED', false );
-
+include_once( 'includes/config.php' );
 include_once( RASPI_CONFIG.'/raspap.php' );
 include_once( 'includes/functions.php' );
 include_once( 'includes/dashboard.php' );
@@ -52,6 +34,8 @@ include_once( 'includes/counter_people.php' );
 include_once( 'includes/counter_people_export.php' );
 include_once( 'includes/database_viewer.php' );
 include_once( 'includes/system_maintenance.php' );
+include_once( 'includes/networking.php' );
+include_once( 'includes/themes.php' );
 
 $output = $return = 0;
 $page = $_GET['page'];
@@ -65,6 +49,13 @@ if (empty($_SESSION['csrf_token'])) {
     }
 }
 $csrf_token = $_SESSION['csrf_token'];
+
+if(!isset($_COOKIE['theme'])) {
+    $theme = "custom.css";
+} else {
+    $theme = $_COOKIE['theme'];
+}
+$theme_url = 'dist/css/' . $theme;
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +88,7 @@ $csrf_token = $_SESSION['csrf_token'];
     <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="dist/css/custom.css" rel="stylesheet">
+    <link href="<?php echo $theme_url; ?>" title="main" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/png" href="../img/favicon.png">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -121,6 +112,7 @@ $csrf_token = $_SESSION['csrf_token'];
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+         
           <a class="navbar-brand" href="index.php">Feerbox Admin web <?php echo $config['version'] ?></a>
         </div>
         <!-- /.navbar-header -->
@@ -133,13 +125,18 @@ $csrf_token = $_SESSION['csrf_token'];
                 <a href="index.php?page=wlan0_info"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
               </li>
               <li>
-                <a href="index.php?page=wpa_conf"><i class="fa fa-signal fa-fw"></i> Configure client</a>
+                
+                <a href="index.php?page=wpa_conf"><i class="fa fa-signal fa-fw"></i> Configure WiFi Client</a>
               </li>
               <li>
-                <a href="index.php?page=hostapd_conf"><i class="fa fa-dot-circle-o fa-fw"></i> Configure hotspot</a>
+                
+                <a href="index.php?page=hostapd_conf"><i class="fa fa-dot-circle-o fa-fw"></i> Configure Hotspot</a>
               </li>
               <li>
-                <a href="index.php?page=dhcpd_conf"><i class="fa fa-exchange fa-fw"></i> Configure DHCP</a>
+                <a href="index.php?page=network_conf"><i class="fa fa-sitemap fa-fw"></i> Configure Networking</a>
+              </li> 
+              <li>
+                <a href="index.php?page=dhcpd_conf"><i class="fa fa-exchange fa-fw"></i> Configure DHCP Server</a>
               </li>
               <?php if ( RASPI_OPENVPN_ENABLED ) : ?>
               <li>
@@ -153,6 +150,9 @@ $csrf_token = $_SESSION['csrf_token'];
               <?php endif; ?>
               <li>
                 <a href="index.php?page=auth_conf"><i class="fa fa-lock fa-fw"></i> Configure Auth</a>
+              </li>
+              <li>
+                <a href="index.php?page=theme_conf"><i class="fa fa-wrench fa-fw"></i> Change Theme</a>
               </li>
               <li>
                  <a href="index.php?page=system_info"><i class="fa fa-cube fa-fw"></i> System</a>
@@ -203,6 +203,9 @@ $csrf_token = $_SESSION['csrf_token'];
           case "wpa_conf":
             DisplayWPAConfig();
             break;
+          case "network_conf":
+            DisplayNetworkingConfig();
+            break;
           case "hostapd_conf":
             DisplayHostAPDConfig();
             break;
@@ -217,6 +220,9 @@ $csrf_token = $_SESSION['csrf_token'];
             break;
           case "save_hostapd_conf":
             SaveTORAndVPNConfig();
+            break;
+          case "theme_conf":
+            DisplayThemeConfig();
             break;
           case "system_info":
             DisplaySystem();
@@ -262,5 +268,8 @@ $csrf_token = $_SESSION['csrf_token'];
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
+
+    <!-- Custom RaspAP JS -->
+    <script src="js/custom.js"></script>
   </body>
 </html>

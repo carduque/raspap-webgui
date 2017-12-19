@@ -78,6 +78,10 @@ function DisplayDHCPConfig() {
   $RangeMask = $arrRange[2];
   preg_match( '/([0-9]*)([a-z])/i', $arrRange[3], $arrRangeLeaseTime );
 
+  $hselected = '';
+  $mselected = '';
+  $dselected = '';
+
   switch( $arrRangeLeaseTime[2] ) {
     case "h":
       $hselected = " selected";
@@ -145,13 +149,13 @@ function DisplayDHCPConfig() {
     </div>
 
     <div class="row">
-      <div class="form-group col-xs-2 col-sm-2">
+      <div class="form-group col-xs-4 col-sm-2">
         <label for="code">Lease Time</label>
         <input type="text" class="form-control" name="RangeLeaseTime" value="<?php echo $arrRangeLeaseTime[1]; ?>" />
       </div>
-      <div class="col-xs-2 col-sm-2">
+      <div class="col-xs-4 col-sm-2">
         <label for="code">Interval</label>
-        <select name="RangeLeaseTimeUnits" class="form-control" ><option value="m" <?php echo $mselected; ?>>Minutes</option><option value="h" <?php echo $hselected; ?>>Hours</option><option value="d" <?php echo $dselected; ?>>Days</option><option value="infinite">Infinite</option></select> 
+        <select name="RangeLeaseTimeUnits" class="form-control" ><option value="m" <?php echo $mselected; ?>>Minute(s)</option><option value="h" <?php echo $hselected; ?>>Hour(s)</option><option value="d" <?php echo $dselected; ?>>Day(s)</option><option value="infinite">Infinite</option></select> 
       </div>
     </div>
 

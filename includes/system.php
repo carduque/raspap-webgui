@@ -26,7 +26,9 @@ function RPiVersion() {
     '0012' => 'Model A+',
     'a01041' => 'a01041',
     'a21041' => 'a21041',
-    '900092' => 'PiZero',
+    '900092' => 'PiZero 1.2',
+    '900093' => 'PiZero 1.3',
+    '9000c1' => 'PiZero W',
     'a02082' => 'Pi 3 Model B',
     'a22082' => 'Pi 3 Model B'
   );
@@ -63,6 +65,7 @@ function DisplaySystem(){
   if ($minutes != 0) { $uptime .= $minutes . ' minute' . (($minutes > 1)? 's ':' '); }
 
   // mem used
+  $memused_status = "primary";
   exec("free -m | awk '/Mem:/ { total=$2 } /buffers\/cache/ { used=$3 } END { print used/total*100}'", $memarray);
   $memused = floor($memarray[0]);
   if     ($memused > 90) { $memused_status = "danger";  }
@@ -102,29 +105,53 @@ function DisplaySystem(){
     ?>
 
     <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
     <div class="panel panel-default">
     <div class="panel-body">
-      <h4>System Information</h4>
-      <div class="info-item">Hostname</div> <?php echo $hostname ?></br>
-      <div class="info-item">Pi Revision</div> <?php echo RPiVersion() ?></br>
-      <div class="info-item">Uptime</div>   <?php echo $uptime ?></br></br>
-      <div class="info-item">Memory Used</div>
-        <div class="progress">
-        <div class="progress-bar progress-bar-<?php echo $memused_status ?> progress-bar-striped active"
-          role="progressbar"
-          aria-valuenow="<?php echo $memused ?>" aria-valuemin="0" aria-valuemax="100"
-          style="width: <?php echo $memused ?>%;"><?php echo $memused ?>%
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active systemtab"><a href="#system" aria-controls="system" role="tab" data-toggle="tab">System</a></li>
+        <li role="presentation" class="consoletab"><a href="#console" aria-controls="console" role="tab" data-toggle="tab">Console</a></li>
+    </ul>
+
+    <div class="systemtabcontent tab-content">
+        <div role="tabpanel" class="tab-pane active" id="system">
+            <div class="row">
+                <div class="col-lg-6">
+                        <h4>System Information</h4>
+                        <div class="info-item">Hostname</div> <?php echo $hostname ?></br>
+                        <div class="info-item">Pi Revision</div> <?php echo RPiVersion() ?></br>
+                        <div class="info-item">Uptime</div>   <?php echo $uptime ?></br></br>
+                        <div class="info-item">Memory Used</div>
+                        <div class="progress">
+                        <div class="progress-bar progress-bar-<?php echo $memused_status ?> progress-bar-striped active"
+                        role="progressbar"
+                        aria-valuenow="<?php echo $memused ?>" aria-valuemin="0" aria-valuemax="100"
+                        style="width: <?php echo $memused ?>%;"><?php echo $memused ?>%
+                        </div>
+                        </div>
+                        <div class="info-item">CPU Load</div>
+                        <div class="progress">
+                        <div class="progress-bar progress-bar-<?php echo $cpuload_status ?> progress-bar-striped active"
+                        role="progressbar"
+                        aria-valuenow="<?php echo $cpuload ?>" aria-valuemin="0" aria-valuemax="100"
+                        style="width: <?php echo $cpuload ?>%;"><?php echo $cpuload ?>%
+                        </div>
+                        </div>
+
+                        <form action="?page=system_info" method="POST">
+                        <input type="submit" class="btn btn-warning" name="system_reboot"   value="Reboot" />
+                        <input type="submit" class="btn btn-warning" name="system_shutdown" value="Shutdown" />
+                        <input type="button" class="btn btn-outline btn-primary" value="Refresh" onclick="document.location.reload(true)" />
+                        </form>
+                </div>
+            </div>
         </div>
-        </div>
-      <div class="info-item">CPU Load</div>
-        <div class="progress">
-        <div class="progress-bar progress-bar-<?php echo $cpuload_status ?> progress-bar-striped active"
-          role="progressbar"
-          aria-valuenow="<?php echo $cpuload ?>" aria-valuemin="0" aria-valuemax="100"
-          style="width: <?php echo $cpuload ?>%;"><?php echo $cpuload ?>%
-        </div>
-        </div>
+      <div role="tabpanel" class="tab-pane" id="console">
+      <iframe src="includes/webconsole.php" class="webconsole"></iframe>
+      </div>
+
+
+
     </div><!-- /.panel-body -->
     </div><!-- /.panel-default -->
     </div><!-- /.col-md-6 -->
@@ -141,6 +168,12 @@ function DisplaySystem(){
   </div><!-- /.panel-primary -->
   </div><!-- /.col-lg-12 -->
   </div><!-- /.row -->
+
+
+
+
+      </div>
+  </div>
   <?php
 }
 ?>

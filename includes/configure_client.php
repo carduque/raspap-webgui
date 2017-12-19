@@ -75,8 +75,9 @@ function DisplayWPAConfig(){
           fwrite($wpa_file, "}".PHP_EOL);
         } else {
           if (strlen($network['passphrase']) >=8 && strlen($network['passphrase']) <= 63) {
-            $wpa_passphrase = "";
-            exec( 'wpa_passphrase '.escapeshellarg($ssid). ' ' . escapeshellarg($network['passphrase']),$wpa_passphrase );
+	    unset($wpa_passphrase);
+            unset($line);
+	    exec( 'wpa_passphrase '.escapeshellarg($ssid). ' ' . escapeshellarg($network['passphrase']),$wpa_passphrase );
             foreach($wpa_passphrase as $line) {
               fwrite($wpa_file, $line.PHP_EOL);
             }
@@ -92,8 +93,13 @@ function DisplayWPAConfig(){
       if ($ok) {
         system( 'sudo cp /tmp/wifidata ' . RASPI_WPA_SUPPLICANT_CONFIG, $returnval );
         if( $returnval == 0 ) {
-          $status->addMessage('Wifi settings updated successfully', 'success');
-          $networks = $tmp_networks;
+          exec('sudo wpa_cli reconfigure', $reconfigure_out, $reconfigure_return );
+          if ($reconfigure_return == 0) {
+            $status->addMessage('Wifi settings updated successfully', 'success');
+            $networks = $tmp_networks;
+          } else {
+            $status->addMessage('Wifi settings updated but cannot restart (cannon execute "wpa_cli reconfigure")', 'danger');
+          }
         } else {
           $status->addMessage('Wifi settings failed to be updated', 'danger');
         }
@@ -103,65 +109,34 @@ function DisplayWPAConfig(){
     }
   }
 
-  // exec( 'sudo wpa_cli scan' );
-  // sleep(3);
-  // exec( 'sudo wpa_cli scan_results',$scan_return );
-  $scanCommand = <<<'EOD'
-sudo iw wlan0 scan | grep -v 'BSS Load:' | awk '$1 == "BSS" {
-MAC = $2
-wifi[MAC]["enc"] = "Open"
-}
-$1 == "SSID:" {
-$1="";
-wifi[MAC]["SSID"] = substr($0,2)
-}
-$1 == "freq:" {
-wifi[MAC]["freq"] = $NF
-}
-$1 == "WPA:" {
-wifi[MAC]["enc"] = "WPA"
-}
-$1 == "WPS:" {
-wifi[MAC]["enc"] = "WPA"
-}
-END {
-for (w in wifi) {
-if (wifi[w]["SSID"] != "") {
-printf "%s\t%s\t%s\n",wifi[w]["SSID"],wifi[w]["freq"],wifi[w]["enc"]
-}}}'
-EOD;
-
-  exec($scanCommand, $scan_return);
-  if (!empty($scan_return)) {
-    // display output
-    foreach( $scan_return as $network ) {
-      $arrNetwork = explode("\t",$network);
-      if (array_key_exists($arrNetwork[0], $networks)) {
-        $networks[$arrNetwork[0]]['visible'] = true;
-        $networks[$arrNetwork[0]]['channel'] = ConvertToChannel($arrNetwork[1]);
-        // TODO What if the security has changed?
-      } else {
-        $networks[$arrNetwork[0]] = array(
-          'configured' => false,
-          'protocol' => $arrNetwork[2],
-          'channel' => ConvertToChannel($arrNetwork[1]),
-          'passphrase' => '',
-          'visible' => true,
-          'connected' => false
-        );
-      }
+  exec( 'sudo wpa_cli scan' );
+  sleep(3);
+  exec( 'sudo wpa_cli scan_results',$scan_return );
+  for( $shift = 0; $shift < 2; $shift++ ) {
+    array_shift($scan_return);
+  }
+  // display output
+  foreach( $scan_return as $network ) {
+    $arrNetwork = preg_split("/[\t]+/",$network);
+    if (array_key_exists($arrNetwork[4], $networks)) {
+      $networks[$arrNetwork[4]]['visible'] = true;
+      $networks[$arrNetwork[4]]['channel'] = ConvertToChannel($arrNetwork[1]);
+      // TODO What if the security has changed?
+    } else {
+      $networks[$arrNetwork[4]] = array(
+        'configured' => false,
+        'protocol' => ConvertToSecurity($arrNetwork[3]),
+        'channel' => ConvertToChannel($arrNetwork[1]),
+        'passphrase' => '',
+        'visible' => true,
+        'connected' => false
+      );
     }
-     
-  } else {
-    echo "Wifi scan not ready, wait a second";
-    $status->addMessage('Wifi scan unauthorized', 'danger');
-    sleep(2);
-    echo '<script>location.reload(true);</script>';
   }
 
   exec( 'iwconfig wlan0', $iwconfig_return );
   foreach ($iwconfig_return as $line) {
-    if (preg_match( '/ESSID:\"(.+)\"/i',$line,$iwconfig_ssid )) {
+    if (preg_match( '/ESSID:\"([^"]+)\"/i',$line,$iwconfig_ssid )) {
       $networks[$iwconfig_ssid[1]]['connected'] = true;
     }
   }
@@ -175,7 +150,9 @@ EOD;
         <div class="panel-body">
           <p><?php $status->showMessages(); ?></p>
           <h4>Client settings</h4>
-
+	<div class="btn-group btn-block">
+	<a href=".?<?php echo $_SERVER['QUERY_STRING']; ?>" style="padding:10px;float: right;display: block;position: relative;margin-top: -55px;" class="col-md-2 btn btn-info" id="update">Rescan</a>
+	</div>
           <form method="POST" action="?page=wpa_conf" name="wpa_conf_form">
             <?php CSRFToken() ?>
             <input type="hidden" name="client_settings" ?>
@@ -200,7 +177,7 @@ EOD;
                 <?php } ?>
                 </td>
                 <td>
-                  <input type="hidden" name="ssid<?php echo $index ?>" value="<?php echo $ssid ?>" />
+                  <input type="hidden" name="ssid<?php echo $index ?>" value="<?php echo htmlentities($ssid) ?>" />
                   <?php echo $ssid ?>
                 </td>
               <?php if ($network['visible']) { ?>

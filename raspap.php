@@ -9,29 +9,28 @@ function parse_properties($txtProperties) {
 		if (empty($line) || (!$isWaitingOtherLine && strpos($line, "#") === 0))
 			continue;
 			
-		if (!$isWaitingOtherLine) {
-			$key = substr($line, 0, strpos($line, '='));
-			$value = substr($line, strpos($line, '=')+1, strlen($line));        
-		}
-		else {
-			$value .= $line;    
-		}    
-		/* Check if ends with single '\' */
-		if (strrpos($value, "\\") === strlen($value)-strlen("\\")) {
-			$value = substr($value,0,strlen($value)-1)."\n";
-			$isWaitingOtherLine = true;
-		}
-		else {
-			$isWaitingOtherLine = false;
-		}
-		
-		$result[$key] = $value;    
-		unset($lines[$i]);        
+			if (!$isWaitingOtherLine) {
+				$key = substr($line, 0, strpos($line, '='));
+				$value = substr($line, strpos($line, '=')+1, strlen($line));
+			}
+			else {
+				$value .= $line;
+			}
+			/* Check if ends with single '\' */
+			if (strrpos($value, "\\") === strlen($value)-strlen("\\")) {
+				$value = substr($value,0,strlen($value)-1)."\n";
+				$isWaitingOtherLine = true;
+			}
+			else {
+				$isWaitingOtherLine = false;
+			}
+			
+			$result[$key] = $value;
+			unset($lines[$i]);
 	}
 	
 	return $result;
 }
-
 $properties_file = parse_properties('/opt/FeerBoxClient/FeerBoxClient/target/classes/config.properties');
 $fh = fopen('/opt/FeerBoxClient/FeerBoxClient/config/version.txt','r');
 while ($line = fgets($fh)) {
@@ -47,10 +46,12 @@ $config = array(
   'feerbox_version'=>$feerbox_version
 );
 
-if ( file_exists( RASPI_CONFIG.'/raspap.auth') && $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {
-  $config['admin_user'] = trim(fgets($auth_details));
-  $config['admin_pass'] = trim(fgets($auth_details));
-  fclose($auth_details);
+if(file_exists(RASPI_CONFIG.'/raspap.auth')) {
+    if ( $auth_details = fopen(RASPI_CONFIG.'/raspap.auth', 'r') ) {
+      $config['admin_user'] = trim(fgets($auth_details));
+      $config['admin_pass'] = trim(fgets($auth_details));
+      fclose($auth_details);
+    }
 }
 
 ?>
