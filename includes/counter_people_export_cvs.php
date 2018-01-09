@@ -12,7 +12,7 @@ if (isset($_GET['week'])) {
 }
 $db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 
-$month_ini = new DateTime("first day of last month");
+$month_ini = new DateTime("first day of -3 months");
 $month_ini ->setTime(0,0,0);
 $query='SELECT min(time) as min_time FROM counterpeople where time>="'.date_format($month_ini,'Y-m-d H:i:s').'"';
 $results = $db->query($query);
@@ -36,6 +36,7 @@ while ($row = $results->fetchArray()) {
 	$counterpeople[$i]['time'] = $row['time'];
 	$counterpeople[$i]['reference'] = $row['reference'];
 	$reference = $row['reference'];
+	$counterpeople[$i]['distance'] = $row['distance'];
 	$counterpeople[$i]['upload'] = $row['upload'];
 	$i++;
 }

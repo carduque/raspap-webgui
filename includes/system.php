@@ -141,6 +141,7 @@ function DisplaySystem(){
                         <form action="?page=system_info" method="POST">
                         <input type="submit" class="btn btn-warning" name="system_reboot"   value="Reboot" />
                         <input type="submit" class="btn btn-warning" name="system_shutdown" value="Shutdown" />
+                        <input type="submit" class="btn btn-warning" name="deployAndReboot" value="Update Software and reboot" />
                         <input type="button" class="btn btn-outline btn-primary" value="Refresh" onclick="document.location.reload(true)" />
                         </form>
                 </div>
@@ -156,13 +157,6 @@ function DisplaySystem(){
     </div><!-- /.panel-default -->
     </div><!-- /.col-md-6 -->
     </div><!-- /.row -->
-
-    <form action="?page=system_info" method="POST">
-      <input type="submit" class="btn btn-warning" name="system_reboot"   value="Reboot" />
-      <input type="submit" class="btn btn-warning" name="system_shutdown" value="Shutdown" />
-      <input type="submit" class="btn btn-warning" name="deployAndReboot" value="Update Software and reboot" />
-      <input type="button" class="btn btn-outline btn-primary" value="Refresh" onclick="document.location.reload(true)" />
-    </form>
 
   </div><!-- /.panel-body -->
   </div><!-- /.panel-primary -->
