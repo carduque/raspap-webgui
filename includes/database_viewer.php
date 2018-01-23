@@ -22,6 +22,9 @@ function DisplayDataBaseViewer(){
   		if($_POST['table']=="status"){
   			$query='SELECT id, internet, time, reference, upload FROM Status order by id desc limit 100';
   		}
+  		if($_POST['table']=="weathersensor"){
+  			$query='SELECT id, creation_date, feerbox_reference, humidity, temperature, time FROM weathersensor order by id desc limit 100';
+  		}		
 		$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 		$results = $db->query($query);
     	//$db = pg_connect("host=localhost port=5432 dbname=feerbox-dev user=postgres password=admin");
@@ -47,6 +50,7 @@ function DisplayDataBaseViewer(){
 	        	<option value="macs" <?php if(isset($_POST) && isset($_POST['table']) && $_POST['table']=="macs"){echo "selected";}?>>MACs</option>
 	        	<option value="counterPeople" <?php if(isset($_POST) && isset($_POST['table']) && $_POST['table']=="counterPeople"){echo "selected";}?>>Counter People</option>
 	        	<option value="status" <?php if(isset($_POST) && isset($_POST['table']) && $_POST['table']=="status"){echo "selected";}?>>Status</option>
+                <option value="weathersensor" <?php if(isset($_POST) && isset($_POST['table']) && $_POST['table']=="weathersensor"){echo "selected";}?>>Weather Sensor</option>
 	        </select>
 	         <div class="btn-group btn-block">
                     <input type="submit" class="col-md-6 btn btn-info" value="view" id="view" name="View last inserts" />
@@ -89,6 +93,9 @@ function addTableHeader($table){
 	if($table=="status"){
 		echo "<th>id</th><th>internet</th><th>time</th><th>reference</th><th>upload</th>";
 	}
+	if($table=="weathersensor"){
+		echo "<th>id</th><th>id</th><th>humidity</th><th>temperature</th><th>time</th><th>reference</th><th>upload</th>";
+	}	
 }
 function addColumns($table, $row){
 	if($table=="answers"){
@@ -103,5 +110,8 @@ function addColumns($table, $row){
 	if($table=="status"){
 		echo "<td>".$row['id']."</td><td>".$row['internet']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
 	}
+	if($table=="weathersensor"){
+		echo "<td>".$row['id']."</td><td>".$row['humidity']."</td><td>".$row['temperature']."</td><td>".$row['time']."</td><td>".$row['reference']."</td><td>".$row['upload']."</td>";
+	}	
 }
 ?>
