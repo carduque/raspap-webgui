@@ -23,7 +23,7 @@ function DisplayDataBaseViewer(){
   			$query='SELECT id, internet, time, reference, upload FROM Status order by id desc limit 100';
   		}
   		if($_POST['table']=="weathersensor"){
-  			$query='SELECT id, creation_date, feerbox_reference, humidity, temperature, time FROM weathersensor order by id desc limit 100';
+  			$query='SELECT id, creation_date, reference, humidity, temperature, time FROM weathersensor order by id desc limit 100';
   		}		
 		$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 		$results = $db->query($query);
