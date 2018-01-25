@@ -94,7 +94,7 @@ function addTableHeader($table){
 		echo "<th>id</th><th>internet</th><th>time</th><th>reference</th><th>upload</th>";
 	}
 	if($table=="weathersensor"){
-		echo "<th>id</th><th>id</th><th>humidity</th><th>temperature</th><th>time</th><th>reference</th><th>upload</th>";
+		echo "<th>id</th><th>humidity</th><th>temperature</th><th>time</th><th>reference</th><th>upload</th>";
 	}	
 }
 function addColumns($table, $row){
