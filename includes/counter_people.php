@@ -32,8 +32,15 @@ function DisplayCounterPeopleViewer(){
    <script type="text/javascript">
         $(document).ready(function(){
             setInterval(function(){
-                $.get("includes/counterpeople_db.php<?php if(isset($_POST) && isset($_POST['counter_people'])){echo "?type=".$_POST['counter_type'];}?>", function(data){
-                    $("#pir").html(data);
+                $.get("includes/counterpeople_db1.php<?php if(isset($_POST) && isset($_POST['counter_people'])){echo "?type=".$_POST['counter_type'];}?>", function(data){
+                    $("#pir1").html(data);
+                });
+            }, 1000);
+        });
+        $(document).ready(function(){
+            setInterval(function(){
+                $.get("includes/counterpeople_db2.php<?php if(isset($_POST) && isset($_POST['counter_people'])){echo "?type=".$_POST['counter_type'];}?>", function(data){
+                    $("#pir2").html(data);
                 });
             }, 1000);
         });
@@ -44,7 +51,9 @@ function DisplayCounterPeopleViewer(){
         <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People viewer</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-          CounterPeople: <div id="pir" style="font-size:xx-large;">0</div>
+        <?=date('Y-m-d H:i:s')?><br/>
+          CounterPeople Enter: <div id="pir1" style="font-size:xx-large;">0</div>
+          CounterPeople Exit: <div id="pir2" style="font-size:xx-large;">0</div>
           <br/><br/><br/>
           <form role="form" action="?page=counter_people" method="POST">
             <?php CSRFToken() ?>
