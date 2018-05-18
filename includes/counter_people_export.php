@@ -7,7 +7,7 @@
 function DisplayCounterPeopleExport(){
 	$db = new SQLite3('/opt/FeerBoxClient/FeerBoxClient/db/feerboxclient.db');
 	//Select min value from db
-	$month_ini = new DateTime("first day of -3 months");
+	$month_ini = new DateTime("first day of -6 months");
 	$month_ini ->setTime(0,0,0);
 	$query='SELECT min(time) as min_time FROM counterpeople where time>="'.date_format($month_ini,'Y-m-d H:i:s').'"';
 	$results = $db->query($query);
@@ -41,7 +41,7 @@ function DisplayCounterPeopleExport(){
   <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-primary">
-        <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People export - files from first day of 3 months ago</div>
+        <div class="panel-heading"><i class="fa fa-users fa-fw"></i> Counter People export - files from first day of 6 months ago</div>
         <!-- /.panel-heading -->
         <div class="panel-body">
           <br/><br/><br/>
